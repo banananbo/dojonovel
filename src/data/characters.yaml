@@ -8,6 +8,7 @@ characters:
       normal: characters/hero/normal.png
       happy: characters/hero/happy.png
       sad: characters/hero/sad.png
+      talking: characters/hero/normal.png
 
   - id: char_yui
     name: "ユイ"
@@ -22,9 +23,11 @@ characters:
     name: "田中メンター"
     name_flag: null
     voicevox_speaker_id: 3
+    y_offset: -250
     sprites:
-      normal: characters/mentor/normal.png
-      smile: characters/mentor/smile.png
+      normal: characters/mentor/mentor_nomal.png
+      smile: characters/mentor/mentor_nomal.png
+      talking: characters/mentor/mentor_nomal.png
 
   - id: char_obachan
     name: "田村のおばあさん"

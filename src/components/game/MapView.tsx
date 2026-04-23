@@ -19,10 +19,7 @@ export function MapView({ connections, onMove, onClose }: MapViewProps) {
             <button
               key={conn.location_id}
               className={styles.item}
-              onClick={() => {
-                onMove(conn.location_id);
-                onClose();
-              }}
+              onClick={() => onMove(conn.location_id)}
             >
               {conn.label}
             </button>

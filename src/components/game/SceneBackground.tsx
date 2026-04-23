@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './SceneBackground.module.css';
 
 interface SceneBackgroundProps {
@@ -12,6 +12,8 @@ export function SceneBackground({ backgroundPath, locationName }: SceneBackgroun
   const src = backgroundPath
     ? `${import.meta.env.BASE_URL}assets/${backgroundPath}`
     : null;
+
+  useEffect(() => { setImgError(false); }, [src]);
 
   return (
     <div className={styles.root}>

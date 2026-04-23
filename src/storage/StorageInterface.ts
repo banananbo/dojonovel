@@ -1,4 +1,5 @@
 import type { FlagMap } from '../types/flag';
+import type { CharacterDisplay } from '../types/scene';
 
 export interface SaveData {
   version: number;
@@ -8,6 +9,7 @@ export interface SaveData {
   flags: FlagMap;
   inventory: string[];
   sceneHistory: string[];
+  currentCharacters: CharacterDisplay[];
   playtime: number;
 }
 

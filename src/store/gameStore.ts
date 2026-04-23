@@ -41,6 +41,7 @@ function buildInitialState(masterData: MasterData): GameState {
     inventory: [],
     sceneHistory: [],
     phase: 'title',
+    currentCharacters: [],
   };
 }
 
@@ -70,6 +71,7 @@ export const useGameStore = create<GameStore>((set, get) => {
           inventory: saveData.inventory,
           sceneHistory: saveData.sceneHistory,
           phase: 'command',
+          currentCharacters: saveData.currentCharacters ?? [],
         },
         playtimeStart: Date.now() - saveData.playtime * 1000,
       });
@@ -85,6 +87,7 @@ export const useGameStore = create<GameStore>((set, get) => {
         flags: state.flags,
         inventory: state.inventory,
         sceneHistory: state.sceneHistory,
+        currentCharacters: state.currentCharacters,
         playtime: Math.floor((Date.now() - playtimeStart) / 1000),
       };
     },

@@ -1,4 +1,5 @@
 import type { FlagMap } from './flag';
+import type { CharacterDisplay } from './scene';
 
 export type GamePhase =
   | 'title'
@@ -18,6 +19,7 @@ export interface GameState {
   inventory: string[];
   sceneHistory: string[];
   phase: GamePhase;
+  currentCharacters: CharacterDisplay[];
 }
 
 export const INITIAL_SCENE_ID = 'scene_danchi_morning';

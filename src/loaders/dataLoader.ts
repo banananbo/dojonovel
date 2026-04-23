@@ -26,8 +26,24 @@ function toRecord<T extends { id: string }>(arr: T[]): Record<string, T> {
   return Object.fromEntries(arr.map((item) => [item.id, item]));
 }
 
+function flattenScenes(raw: any[], parentDefaults: Partial<Scene> = {}): Scene[] {
+  const result: Scene[] = [];
+  for (const s of raw) {
+    const { child_scenes, ...rest } = s;
+    const merged = { ...parentDefaults, ...rest } as Scene;
+    result.push(merged);
+    if (child_scenes?.length) {
+      result.push(...flattenScenes(child_scenes, {
+        location_id: merged.location_id,
+        background: merged.background,
+      }));
+    }
+  }
+  return result;
+}
+
 function loadMasterData(): MasterData {
-  const scenesData = yaml.load(scenesRaw) as { scenes: Scene[] };
+  const scenesData = yaml.load(scenesRaw) as { scenes: any[] };
   const flagsData = yaml.load(flagsRaw) as { flags: FlagDefinition[] };
   const itemsData = yaml.load(itemsRaw) as { items: ItemDefinition[] };
   const locationsData = yaml.load(locationsRaw) as { locations: LocationDefinition[] };
@@ -35,7 +51,7 @@ function loadMasterData(): MasterData {
   const commandsData = yaml.load(commandsRaw) as { commands: CommandDefinition[] };
 
   return {
-    scenes: toRecord(scenesData.scenes),
+    scenes: toRecord(flattenScenes(scenesData.scenes)),
     flags: flagsData.flags,
     items: toRecord(itemsData.items),
     locations: toRecord(locationsData.locations),

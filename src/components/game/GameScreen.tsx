@@ -1,6 +1,6 @@
-import type { Scene } from '../../types/scene';
-import type { CharacterDisplay } from '../../types/scene';
+import { useState, useEffect, useRef } from 'react';
 import { useGameStore } from '../../store/gameStore';
+import { audioManager } from '../../audio/AudioManager';
 import { useAudioStore } from '../../store/audioStore';
 import { getAvailableCommands } from '../../engine/CommandEngine';
 import { getAvailableConnections } from '../../engine/LocationEngine';
@@ -14,17 +14,6 @@ import { MapView } from './MapView';
 import { InventoryPanel } from '../inventory/InventoryPanel';
 import { SystemMenu } from '../system/SystemMenu';
 import styles from './GameScreen.module.css';
-
-function getActiveCharacters(scene: Scene, messageIndex: number): CharacterDisplay[] {
-  let current: CharacterDisplay[] = scene.characters ?? [];
-  for (let i = 0; i <= messageIndex; i++) {
-    const msg = scene.messages[i];
-    if (msg?.characters !== undefined) {
-      current = msg.characters;
-    }
-  }
-  return current;
-}
 
 export function GameScreen() {
   const {
@@ -54,6 +43,23 @@ export function GameScreen() {
   const connections = getAvailableConnections(state.currentLocationId, state, masterData);
 
   const choices = scene?.branches?.choices ?? [];
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const speakingCharId = currentMessage?.voice_character_id ?? null;
+
+  const currentBgmRef = useRef<string | null>(null);
+  useEffect(() => {
+    const bgm = scene?.bgm;
+    if (!bgm || bgm === currentBgmRef.current) return;
+    currentBgmRef.current = bgm;
+    audioManager.playBgm(`${import.meta.env.BASE_URL}assets/${bgm}`, true, settings.bgmVolume);
+  }, [scene?.bgm]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (state.phase === 'title') {
+      audioManager.stopBgm();
+      currentBgmRef.current = null;
+    }
+  }, [state.phase]);
 
   return (
     <div className={styles.root}>
@@ -62,7 +68,7 @@ export function GameScreen() {
         locationName={location?.name}
       />
 
-      {scene && getActiveCharacters(scene, state.currentMessageIndex).map((display) => {
+      {state.currentCharacters.map((display) => {
         const char = masterData.characters[display.character_id];
         if (!char) return null;
         return (
@@ -70,6 +76,7 @@ export function GameScreen() {
             key={display.character_id}
             display={display}
             character={char}
+            isSpeaking={isSpeaking && display.character_id === speakingCharId}
           />
         );
       })}
@@ -91,6 +98,7 @@ export function GameScreen() {
           speaker={speaker}
           textSpeed={settings.textSpeed}
           onAdvance={advanceMessage}
+          onSpeakingChange={setIsSpeaking}
         />
       )}
 

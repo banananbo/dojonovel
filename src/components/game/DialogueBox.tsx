@@ -10,24 +10,29 @@ interface DialogueBoxProps {
   speaker: CharacterDefinition | null;
   textSpeed: number;
   onAdvance: () => void;
+  onSpeakingChange?: (isSpeaking: boolean) => void;
 }
 
-export function DialogueBox({ message, speaker, textSpeed, onAdvance }: DialogueBoxProps) {
+export function DialogueBox({ message, speaker, textSpeed, onAdvance, onSpeakingChange }: DialogueBoxProps) {
   const [complete, setComplete] = useState(false);
   const [instant, setInstant] = useState(false);
-  const { speak } = useVoicevox();
+  const { speak, stop } = useVoicevox();
 
   useEffect(() => {
     setComplete(false);
     setInstant(false);
     speak(message, speaker);
+    onSpeakingChange?.(true);
   }, [message.text]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function handleClick() {
     if (!complete) {
+      stop();
       setInstant(true);
       setComplete(true);
+      onSpeakingChange?.(false);
     } else {
+      stop();
       onAdvance();
     }
   }
@@ -44,7 +49,7 @@ export function DialogueBox({ message, speaker, textSpeed, onAdvance }: Dialogue
             text={message.text}
             speed={textSpeed}
             instant={instant}
-            onComplete={() => setComplete(true)}
+            onComplete={() => { setComplete(true); onSpeakingChange?.(false); }}
           />
         </div>
         {complete && <span className={styles.arrow}>▼</span>}

@@ -60,6 +60,7 @@ export interface Scene {
   id: string;
   location_id?: string;
   background?: string;
+  bgm?: string;
   characters?: CharacterDisplay[];
   messages: SceneMessage[];
   commands?: string[];

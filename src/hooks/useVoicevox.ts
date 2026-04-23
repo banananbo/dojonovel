@@ -57,5 +57,9 @@ export function useVoicevox() {
     }
   }, []);
 
-  return { speak };
+  const stop = useCallback(() => {
+    audioManager.stopVoice();
+  }, []);
+
+  return { speak, stop };
 }

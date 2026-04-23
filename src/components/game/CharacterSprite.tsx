@@ -6,12 +6,15 @@ import styles from './CharacterSprite.module.css';
 interface CharacterSpriteProps {
   display: CharacterDisplay;
   character: CharacterDefinition;
+  isSpeaking?: boolean;
 }
 
-export function CharacterSprite({ display, character }: CharacterSpriteProps) {
+export function CharacterSprite({ display, character, isSpeaking }: CharacterSpriteProps) {
   const [imgError, setImgError] = useState(false);
 
-  const spritePath = character.sprites?.[display.expression] ?? character.sprites?.['normal'];
+  const expression =
+    isSpeaking && character.sprites?.['talking'] ? 'talking' : display.expression;
+  const spritePath = character.sprites?.[expression] ?? character.sprites?.['normal'];
   const src = spritePath
     ? `${import.meta.env.BASE_URL}assets/${spritePath}`
     : null;

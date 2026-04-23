@@ -27,6 +27,14 @@ export function transitionTo(
     next = { ...next, currentLocationId: scene.location_id };
   }
 
+  if (scene.characters !== undefined) {
+    next = { ...next, currentCharacters: scene.characters };
+  }
+
+  if (scene.messages[0]?.characters !== undefined) {
+    next = { ...next, currentCharacters: scene.messages[0].characters };
+  }
+
   next = { ...next, flags: applyFlagsSet(scene.flags_set, next.flags) };
   next = tryGiveItems(scene.item_give, next);
 
@@ -40,7 +48,12 @@ export function advanceMessage(state: GameState, masterData: MasterData): GameSt
   const nextIndex = state.currentMessageIndex + 1;
 
   if (nextIndex < scene.messages.length) {
-    return { ...state, currentMessageIndex: nextIndex };
+    const nextMsg = scene.messages[nextIndex];
+    const newState = { ...state, currentMessageIndex: nextIndex };
+    if (nextMsg.characters !== undefined) {
+      return { ...newState, currentCharacters: nextMsg.characters };
+    }
+    return newState;
   }
 
   return resolveAfterMessages(state, scene, masterData);
