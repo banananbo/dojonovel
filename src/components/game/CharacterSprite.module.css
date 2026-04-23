@@ -1,0 +1,40 @@
+.root {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.left {
+  left: 60px;
+}
+
+.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.right {
+  right: 60px;
+}
+
+.img {
+  display: block;
+}
+
+.placeholder {
+  width: 100px;
+  height: 200px;
+  background: rgba(80, 60, 40, 0.3);
+  border: 1px dashed rgba(200, 168, 90, 0.3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholderName {
+  color: rgba(200, 168, 90, 0.5);
+  font-size: 11px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}

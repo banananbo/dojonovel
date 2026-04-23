@@ -1,0 +1,355 @@
+scenes:
+  # =====================
+  # 赤羽団地
+  # =====================
+  - id: scene_danchi_morning
+    location_id: loc_danchi
+    background: backgrounds/danchimae.jpg
+    characters:
+      - character_id: char_hero
+        position: left
+        expression: normal
+    messages:
+      - text: "今日はCoderDojo赤羽の開催日だ。"
+        voice_character_id: char_hero
+      - text: "あ、田村のおばちゃん。おはようございます！"
+        voice_character_id: char_hero
+      - text: "「ケンちゃん、また出かけるの？ほら、これ持って行きな。」"
+        voice_character_id: char_obachan
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
+          - character_id: char_obachan
+            position: right
+            expression: normal
+      - text: "アメちゃんをもらった！"
+        voice_character_id: null
+    item_give:
+      - item_id: item_suica
+        condition: null
+      - item_id: item_candy
+        condition: null
+    flags_set:
+      - flag: flag_left_danchi
+        value: true
+    clickable_areas:
+      - id: area_mailbox
+        x: 80
+        y: 320
+        width: 80
+        height: 100
+        label: "郵便受け"
+        next_scene: scene_examine_mailbox
+        condition: null
+      - id: area_danchi_board
+        x: 570
+        y: 180
+        width: 110
+        height: 130
+        label: "掲示板"
+        next_scene: scene_examine_danchi_board
+        condition: null
+    branches:
+      type: none
+
+  - id: scene_examine_mailbox
+    location_id: loc_danchi
+    background: backgrounds/danchimae.jpg
+    messages:
+      - text: "ケンの家の郵便受けだ。今日は特に何も入っていない。"
+        voice_character_id: null
+    next_scene: null
+
+  - id: scene_examine_danchi_board
+    location_id: loc_danchi
+    background: backgrounds/danchimae.jpg
+    messages:
+      - text: "団地内の掲示板。ゴミ出しや行事のお知らせが貼られている。"
+        voice_character_id: null
+      - text: "ほかに変わった情報はなさそうだ。"
+        voice_character_id: null
+    next_scene: null
+
+  - id: scene_talk_danchi
+    location_id: loc_danchi
+    background: backgrounds/danchimae.jpg
+    # characters:
+    #   - character_id: char_obachan
+    #     position: right
+    #     expression: normal
+    messages:
+      - text: "「ケンちゃん、気をつけてね。帰りが遅くなるんなら連絡しなさいよ。」"
+        voice_character_id: char_obachan
+    next_scene: null
+
+  # =====================
+  # 赤羽駅前
+  # =====================
+  - id: scene_station_default
+    location_id: loc_station
+    background: backgrounds/station_day.jpg
+    messages:
+      - text: "赤羽駅の改札を出たところだ。"
+        voice_character_id: null
+      - text: "休日の昼間、人が多く賑わっている。"
+        voice_character_id: null
+    clickable_areas:
+      - id: area_station_board
+        x: 100
+        y: 160
+        width: 110
+        height: 140
+        label: "掲示板"
+        next_scene: scene_examine_station_board
+        condition: null
+      - id: area_kiosk
+        x: 560
+        y: 210
+        width: 130
+        height: 110
+        label: "キオスク"
+        next_scene: scene_examine_kiosk
+        condition: null
+    branches:
+      type: none
+
+  - id: scene_examine_station_board
+    location_id: loc_station
+    background: backgrounds/station_day.jpg
+    messages:
+      - text: "駅前の掲示板を見た。"
+        voice_character_id: null
+      - text: "いくつかのお知らせの中に、見覚えのあるチラシがある。"
+        voice_character_id: null
+      - text: "「CoderDojo赤羽　本日開催！　参加無料　午後1時より」"
+        voice_character_id: null
+      - text: "チラシを一枚もらった！"
+        voice_character_id: null
+    item_give:
+      - item_id: item_flyer
+        condition: null
+    flags_set:
+      - flag: flag_station_explored
+        value: true
+      - flag: flag_got_flyer
+        value: true
+    next_scene: null
+
+  - id: scene_examine_kiosk
+    location_id: loc_station
+    background: backgrounds/station_day.jpg
+    messages:
+      - text: "キオスクが並んでいる。雑誌や飲み物が売られている。"
+        voice_character_id: null
+      - text: "今は特に何も買わなくていいか。"
+        voice_character_id: null
+    next_scene: null
+
+  - id: scene_talk_station
+    location_id: loc_station
+    background: backgrounds/station_day.jpg
+    messages:
+      - text: "辺りを見回すと……"
+        voice_character_id: null
+    branches:
+      type: auto
+      choices:
+        - label: ""
+          condition:
+            flag: flag_met_yui
+            value: true
+          next_scene: scene_yui_already_met
+        - label: ""
+          condition: null
+          next_scene: scene_meet_yui
+
+  - id: scene_meet_yui
+    location_id: loc_station
+    background: backgrounds/station_day.jpg
+    characters:
+      - character_id: char_yui
+        position: center
+        expression: surprise
+    messages:
+      - text: "後ろから声がした。"
+        voice_character_id: null
+      - text: "「あっ、ケンじゃん！やっぱりいた。」"
+        voice_character_id: char_yui
+        voice_style: normal
+      - text: "「今日CoderDojo行くでしょ？掲示板もう見た？」"
+        voice_character_id: char_yui
+        voice_style: normal
+    branches:
+      type: choice
+      choices:
+        - label: "「うん、見たよ。一緒に行こう！」"
+          condition:
+            flag: flag_station_explored
+            value: true
+          next_scene: scene_yui_lets_go
+        - label: "「あ、まだ見てない。ちょっと待ってて」"
+          condition: null
+          next_scene: null
+
+  - id: scene_yui_lets_go
+    location_id: loc_station
+    background: backgrounds/station_day.jpg
+    characters:
+      - character_id: char_yui
+        position: center
+        expression: happy
+    messages:
+      - text: "「やった！じゃ行こう！CoderDojo楽しみだね！」"
+        voice_character_id: char_yui
+        voice_style: normal
+      - text: "ユイと合流した。"
+        voice_character_id: null
+    flags_set:
+      - flag: flag_met_yui
+        value: true
+    branches:
+      type: none
+
+  - id: scene_yui_already_met
+    location_id: loc_station
+    background: backgrounds/station_day.jpg
+    characters:
+      - character_id: char_yui
+        position: right
+        expression: happy
+    messages:
+      - text: "「はーやーくー！行こうよ！」"
+        voice_character_id: char_yui
+        voice_style: normal
+    next_scene: null
+
+  # =====================
+  # CoderDojo赤羽
+  # =====================
+  - id: scene_coderdojo_default
+    location_id: loc_coderdojo
+    background: backgrounds/coderdojo.jpg
+    characters:
+      - character_id: char_mentor
+        position: center
+        expression: smile
+    messages:
+      - text: "CoderDojo赤羽の会場に着いた。"
+        voice_character_id: null
+      - text: "広い部屋に子どもたちが集まって、みんなノートパソコンを開いている。"
+        voice_character_id: null
+      - text: "「ケンくん、いらっしゃい！今日もよろしくね。」"
+        voice_character_id: char_mentor
+        voice_style: normal
+    clickable_areas:
+      - id: area_whiteboard
+        x: 50
+        y: 80
+        width: 220
+        height: 140
+        label: "ホワイトボード"
+        next_scene: scene_examine_whiteboard
+        condition: null
+      - id: area_pcs
+        x: 380
+        y: 260
+        width: 300
+        height: 160
+        label: "パソコン群"
+        next_scene: scene_examine_coderdojo_pcs
+        condition: null
+    flags_set:
+      - flag: flag_arrived_coderdojo
+        value: true
+    branches:
+      type: none
+
+  - id: scene_examine_whiteboard
+    location_id: loc_coderdojo
+    background: backgrounds/coderdojo.jpg
+    messages:
+      - text: "ホワイトボードに「今日のテーマ：自由制作！」と書かれている。"
+        voice_character_id: null
+      - text: "何を作ろうか……"
+        voice_character_id: null
+    next_scene: null
+
+  - id: scene_examine_coderdojo_pcs
+    location_id: loc_coderdojo
+    background: backgrounds/coderdojo.jpg
+    messages:
+      - text: "ノートパソコンがずらりと並んでいる。"
+        voice_character_id: null
+      - text: "隣の子のコードが見えた。ゲームっぽいものを作っているみたい。"
+        voice_character_id: null
+    next_scene: null
+
+  - id: scene_talk_coderdojo
+    location_id: loc_coderdojo
+    background: backgrounds/coderdojo.jpg
+    characters:
+      - character_id: char_mentor
+        position: center
+        expression: smile
+    messages:
+      - text: "「今日のテーマは自由制作だよ。何か作りたいものある？」"
+        voice_character_id: char_mentor
+        voice_style: normal
+    branches:
+      type: choice
+      choices:
+        - label: "「ゲームを作りたいです！」"
+          condition: null
+          next_scene: scene_mentor_game_talk
+        - label: "「まだ考え中です……」"
+          condition: null
+          next_scene: scene_mentor_encouragement
+
+  - id: scene_mentor_game_talk
+    location_id: loc_coderdojo
+    background: backgrounds/coderdojo.jpg
+    characters:
+      - character_id: char_mentor
+        position: center
+        expression: smile
+    messages:
+      - text: "「ゲームか！いいね！じゃあまず、どんなゲームにしたいか紙に描いてみよう。」"
+        voice_character_id: char_mentor
+        voice_style: normal
+      - text: "「作りたいものが決まったら、一緒に考えよう。」"
+        voice_character_id: char_mentor
+        voice_style: normal
+      - text: "こうしてぼくのCoderDojoが始まった。"
+        voice_character_id: null
+    flags_set:
+      - flag: flag_met_mentor
+        value: true
+    next_scene: null
+
+  - id: scene_mentor_encouragement
+    location_id: loc_coderdojo
+    background: backgrounds/coderdojo.jpg
+    characters:
+      - character_id: char_mentor
+        position: center
+        expression: smile
+    messages:
+      - text: "「大丈夫、焦らなくていいよ。まわりを見てインスピレーションを探してみて。」"
+        voice_character_id: char_mentor
+        voice_style: normal
+    flags_set:
+      - flag: flag_met_mentor
+        value: true
+    next_scene: null
+
+  # =====================
+  # アイテム使用シーン
+  # =====================
+  - id: scene_use_candy
+    messages:
+      - text: "アメをなめた。"
+        voice_character_id: null
+      - text: "甘くておいしい。ちょっと元気が出た気がする。"
+        voice_character_id: null
+    next_scene: null

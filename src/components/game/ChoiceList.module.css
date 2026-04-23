@@ -1,0 +1,37 @@
+.root {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 0 16px 16px;
+}
+
+.box {
+  background: rgba(10, 8, 20, 0.92);
+  border: 1px solid #5a4a30;
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.choice {
+  padding: 10px 16px;
+  background: rgba(20, 15, 35, 0.8);
+  border: 1px solid #4a3a20;
+  border-radius: 3px;
+  color: #e0d8c8;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.choice:hover {
+  background: rgba(60, 45, 20, 0.9);
+  border-color: #c8a85a;
+  color: #f0e8d0;
+}

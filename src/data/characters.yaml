@@ -1,0 +1,35 @@
+characters:
+  - id: char_hero
+    name: "ケン"
+    name_flag: flag_hero_name
+    voicevox_speaker_id: 2
+    y_offset: -250
+    sprites:
+      normal: characters/hero/normal.png
+      happy: characters/hero/happy.png
+      sad: characters/hero/sad.png
+
+  - id: char_yui
+    name: "ユイ"
+    name_flag: null
+    voicevox_speaker_id: 1
+    sprites:
+      normal: characters/yui/normal.png
+      happy: characters/yui/happy.png
+      surprise: characters/yui/surprise.png
+
+  - id: char_mentor
+    name: "田中メンター"
+    name_flag: null
+    voicevox_speaker_id: 3
+    sprites:
+      normal: characters/mentor/normal.png
+      smile: characters/mentor/smile.png
+
+  - id: char_obachan
+    name: "田村のおばあさん"
+    y_offset: -150
+    name_flag: null
+    voicevox_speaker_id: 5
+    sprites:
+      normal: characters/obachan/normal.png

@@ -1,0 +1,30 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 240px;
+}
+
+.item {
+  padding: 12px 20px;
+  background: rgba(20, 15, 35, 0.8);
+  border: 1px solid #4a3a20;
+  border-radius: 3px;
+  color: #e0d8c8;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.item:hover {
+  background: rgba(50, 40, 15, 0.9);
+  border-color: #c8a85a;
+}
+
+.empty {
+  color: #8a7a60;
+  font-size: 13px;
+  font-style: italic;
+}

@@ -1,0 +1,30 @@
+items:
+  - id: item_suica
+    name: "Suicaカード"
+    description: "電車に乗るためのICカード。残高はある。"
+    icon: null
+    usable: false
+    use_scene: null
+    use_condition: null
+    stackable: false
+    category: key_item
+
+  - id: item_flyer
+    name: "CoderDojoのチラシ"
+    description: "CoderDojo赤羽のチラシ。「本日開催！午後1時より」と書いてある。"
+    icon: null
+    usable: false
+    use_scene: null
+    use_condition: null
+    stackable: false
+    category: key_item
+
+  - id: item_candy
+    name: "アメちゃん"
+    description: "田村のおばあさんにもらったアメ。甘くておいしい。"
+    icon: null
+    usable: true
+    use_scene: scene_use_candy
+    use_condition: null
+    stackable: false
+    category: consumable

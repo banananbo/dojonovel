@@ -1,0 +1,24 @@
+commands:
+  - id: cmd_examine
+    label: "調べる"
+    icon: null
+    description: "周囲をよく調べる"
+    action_type: examine
+
+  - id: cmd_talk
+    label: "話す"
+    icon: null
+    description: "その場にいる人に話しかける"
+    action_type: talk
+
+  - id: cmd_move
+    label: "移動"
+    icon: null
+    description: "別の場所へ移動する"
+    action_type: move
+
+  - id: cmd_inventory
+    label: "持ち物"
+    icon: null
+    description: "所持品を確認する"
+    action_type: inventory

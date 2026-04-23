@@ -1,0 +1,49 @@
+locations:
+  - id: loc_danchi
+    name: "赤羽団地"
+    description: "ケンが住んでいる団地。昔からの住棟が並んでいる。"
+    background_default: backgrounds/danchi_day.jpg
+    default_commands:
+      - cmd_examine
+      - cmd_talk
+      - cmd_move
+      - cmd_inventory
+    connections:
+      - location_id: loc_station
+        label: "赤羽駅前へ"
+        condition: null
+    entry_scene: scene_danchi_morning
+
+  - id: loc_station
+    name: "赤羽駅前"
+    description: "JR赤羽駅の改札前。商店街への入り口でもある。"
+    background_default: backgrounds/station_day.jpg
+    default_commands:
+      - cmd_examine
+      - cmd_talk
+      - cmd_move
+      - cmd_inventory
+    connections:
+      - location_id: loc_danchi
+        label: "団地へ戻る"
+        condition: null
+      - location_id: loc_coderdojo
+        label: "CoderDojo赤羽へ"
+        condition:
+          flag: flag_station_explored
+          value: true
+    entry_scene: scene_station_default
+
+  - id: loc_coderdojo
+    name: "CoderDojo赤羽"
+    description: "子どもたちが毎月集まってプログラミングを楽しむ場所。"
+    background_default: backgrounds/coderdojo.jpg
+    default_commands:
+      - cmd_examine
+      - cmd_talk
+      - cmd_inventory
+    connections:
+      - location_id: loc_station
+        label: "駅前へ戻る"
+        condition: null
+    entry_scene: scene_coderdojo_default

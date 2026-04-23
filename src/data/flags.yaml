@@ -1,0 +1,40 @@
+flags:
+  - id: flag_hero_name
+    type: string
+    default: "ケン"
+    description: "主人公の名前"
+
+  - id: flag_left_danchi
+    type: boolean
+    default: false
+    description: "団地を出た（初回出発済み）"
+
+  - id: flag_station_explored
+    type: boolean
+    default: false
+    description: "駅前の掲示板を見た（CoderDojo行き解禁条件）"
+
+  - id: flag_got_flyer
+    type: boolean
+    default: false
+    description: "CoderDojoのチラシを手に入れた"
+
+  - id: flag_met_yui
+    type: boolean
+    default: false
+    description: "友達のユイと合流した"
+
+  - id: flag_arrived_coderdojo
+    type: boolean
+    default: false
+    description: "CoderDojo赤羽に到着した"
+
+  - id: flag_met_mentor
+    type: boolean
+    default: false
+    description: "田中メンターに話しかけた"
+
+  - id: flag_chapter
+    type: integer
+    default: 1
+    description: "現在のチャプター番号"

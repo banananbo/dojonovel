@@ -1,0 +1,9 @@
+.root {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  background: #080610;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'MS Mincho', serif;
+  user-select: none;
+}

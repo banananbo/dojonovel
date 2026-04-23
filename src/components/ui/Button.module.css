@@ -1,0 +1,37 @@
+.btn {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(20, 20, 40, 0.85);
+  color: #e0d8c8;
+  border: 1px solid #8a7a60;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  user-select: none;
+}
+
+.btn:hover {
+  background: rgba(60, 50, 30, 0.9);
+  border-color: #c8a85a;
+}
+
+.btn:active {
+  background: rgba(80, 60, 20, 0.95);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btnLarge {
+  padding: 12px 32px;
+  font-size: 16px;
+}
+
+.btnSmall {
+  padding: 4px 12px;
+  font-size: 12px;
+}

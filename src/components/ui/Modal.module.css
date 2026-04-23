@@ -1,0 +1,46 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.box {
+  background: rgba(15, 12, 25, 0.95);
+  border: 1px solid #5a4a30;
+  border-radius: 6px;
+  padding: 24px;
+  min-width: 280px;
+  max-width: 560px;
+  width: 90%;
+  color: #e0d8c8;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #5a4a30;
+  padding-bottom: 8px;
+  color: #c8a85a;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #8a7a60;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  color: #e0d8c8;
+}

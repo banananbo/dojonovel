@@ -1,0 +1,40 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.empty {
+  color: #8a7a60;
+  font-size: 13px;
+  font-style: italic;
+  grid-column: 1 / -1;
+  padding: 16px 0;
+  text-align: center;
+}
+
+.detail {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #3a2a18;
+}
+
+.detailName {
+  font-size: 15px;
+  color: #c8a85a;
+  margin-bottom: 6px;
+}
+
+.detailDesc {
+  font-size: 13px;
+  color: #c0b8a8;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}

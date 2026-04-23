@@ -1,0 +1,67 @@
+.root {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 0 16px 16px;
+}
+
+.nameplate {
+  display: inline-block;
+  background: rgba(20, 15, 35, 0.9);
+  border: 1px solid #8a7a60;
+  border-bottom: none;
+  padding: 4px 16px;
+  font-size: 13px;
+  color: #c8a85a;
+  border-radius: 4px 4px 0 0;
+  margin-left: 12px;
+}
+
+.box {
+  background: rgba(10, 8, 20, 0.92);
+  border: 1px solid #5a4a30;
+  border-radius: 4px;
+  padding: 14px 20px 10px;
+  min-height: 80px;
+  cursor: pointer;
+  position: relative;
+}
+
+.boxNarration {
+  background: rgba(10, 8, 20, 0.75);
+  border: 1px solid rgba(90, 74, 48, 0.4);
+  border-radius: 4px;
+  padding: 14px 20px 10px;
+  min-height: 80px;
+  cursor: pointer;
+  position: relative;
+}
+
+.text {
+  color: #e8e0d0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.textNarration {
+  color: #b8b0a4;
+  font-size: 15px;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.arrow {
+  position: absolute;
+  bottom: 10px;
+  right: 16px;
+  color: #c8a85a;
+  font-size: 12px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
