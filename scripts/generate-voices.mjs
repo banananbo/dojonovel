@@ -32,19 +32,23 @@ const speakerMap = Object.fromEntries(
     .map(c => [c.id, c.voicevox_speaker_id])
 );
 
-// 全メッセージから (text, speakerId) を収集（重複なし）
+// 全メッセージから (text, speakerId) を収集（重複なし・child_scenes を再帰処理）
 const jobs = new Map();
-for (const scene of scenes) {
-  for (const msg of scene.messages ?? []) {
-    if (!msg.voice_character_id) continue;
-    const speakerId = speakerMap[msg.voice_character_id];
-    if (speakerId == null) continue;
-    const key = hashKey(msg.text, speakerId);
-    if (!jobs.has(key)) {
-      jobs.set(key, { text: msg.text, speakerId, key });
+function collectJobs(sceneList) {
+  for (const scene of sceneList) {
+    for (const msg of scene.messages ?? []) {
+      if (!msg.voice_character_id) continue;
+      const speakerId = speakerMap[msg.voice_character_id];
+      if (speakerId == null) continue;
+      const key = hashKey(msg.text, speakerId);
+      if (!jobs.has(key)) {
+        jobs.set(key, { text: msg.text, speakerId, key });
+      }
     }
+    if (scene.child_scenes?.length) collectJobs(scene.child_scenes);
   }
 }
+collectJobs(scenes);
 
 console.log(`対象: ${jobs.size} 件\n`);
 

@@ -82,9 +82,9 @@ export function GameScreen() {
         );
       })}
 
-      {state.phase === 'examine' && scene?.clickable_areas && (
+      {state.phase === 'examine' && (
         <ClickableAreaOverlay
-          areas={scene.clickable_areas}
+          areas={scene?.clickable_areas ?? []}
           flags={state.flags}
           inventory={state.inventory}
           locationId={state.currentLocationId}

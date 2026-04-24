@@ -24,7 +24,9 @@ export function ClickableAreaOverlay({
 
   return (
     <div className={styles.root}>
-      <div className={styles.hint}>調べる場所をクリックしてください</div>
+      <div className={styles.hint}>
+        {areas.length > 0 ? '調べる場所をクリックしてください' : '調べられるものはない'}
+      </div>
       {areas
         .filter((area) => evaluateCondition(area.condition, ctx))
         .map((area) => (
