@@ -21,7 +21,7 @@ export function DialogueBox({ message, speaker, textSpeed, onAdvance, onSpeaking
   useEffect(() => {
     setComplete(false);
     setInstant(false);
-    speak(message, speaker);
+    speak(message, speaker, () => onSpeakingChange?.(false));
     onSpeakingChange?.(true);
   }, [message.text]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -49,7 +49,7 @@ export function DialogueBox({ message, speaker, textSpeed, onAdvance, onSpeaking
             text={message.text}
             speed={textSpeed}
             instant={instant}
-            onComplete={() => { setComplete(true); onSpeakingChange?.(false); }}
+            onComplete={() => setComplete(true)}
           />
         </div>
         {complete && <span className={styles.arrow}>▼</span>}

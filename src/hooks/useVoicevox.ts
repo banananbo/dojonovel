@@ -13,6 +13,7 @@ export function useVoicevox() {
   const speak = useCallback(async (
     message: SceneMessage,
     character: CharacterDefinition | null,
+    onEnd?: () => void,
   ) => {
     console.log('[Voicevox] speak called:', { character: character?.id, speakerId: character?.voicevox_speaker_id, voiceCharId: message.voice_character_id });
     if (!character?.voicevox_speaker_id || !message.voice_character_id) return;
@@ -27,7 +28,7 @@ export function useVoicevox() {
 
       if (memoryCache.has(hashKey)) {
         console.log('[Voicevox] cache hit');
-        await audioManager.playVoice(memoryCache.get(hashKey)!);
+        await audioManager.playVoice(memoryCache.get(hashKey)!, 0.9, onEnd);
         return;
       }
 
@@ -36,7 +37,7 @@ export function useVoicevox() {
       if (prebuiltRes?.ok && prebuiltRes.headers.get('content-type')?.startsWith('audio/')) {
         console.log('[Voicevox] prebuilt hit');
         memoryCache.set(hashKey, prebuiltUrl);
-        await audioManager.playVoice(prebuiltUrl);
+        await audioManager.playVoice(prebuiltUrl, 0.9, onEnd);
         return;
       }
 
@@ -51,7 +52,7 @@ export function useVoicevox() {
       const blob = new Blob([buffer], { type: 'audio/wav' });
       const blobUrl = URL.createObjectURL(blob);
       memoryCache.set(hashKey, blobUrl);
-      await audioManager.playVoice(blobUrl);
+      await audioManager.playVoice(blobUrl, 0.9, onEnd);
     } finally {
       speakingRef.current = false;
     }

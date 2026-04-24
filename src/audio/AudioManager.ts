@@ -26,13 +26,14 @@ export class AudioManager {
     }
   }
 
-  async playVoice(audioUrl: string, volume = 0.9): Promise<void> {
+  async playVoice(audioUrl: string, volume = 0.9, onEnd?: () => void): Promise<void> {
     if (this.voiceAudio) {
       this.voiceAudio.pause();
     }
     const audio = new Audio(audioUrl);
     audio.volume = volume;
     this.voiceAudio = audio;
+    if (onEnd) audio.addEventListener('ended', onEnd, { once: true });
     console.log('[AudioManager] playVoice:', audioUrl.slice(0, 60));
     await audio.play().catch((e) => console.warn('[AudioManager] play failed:', e));
   }

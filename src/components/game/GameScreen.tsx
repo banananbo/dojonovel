@@ -45,6 +45,7 @@ export function GameScreen() {
   const choices = scene?.branches?.choices ?? [];
   const [isSpeaking, setIsSpeaking] = useState(false);
   const speakingCharId = currentMessage?.voice_character_id ?? null;
+  const effectiveIsSpeaking = isSpeaking && state.phase === 'message';
 
   const currentBgmRef = useRef<string | null>(null);
   useEffect(() => {
@@ -76,7 +77,7 @@ export function GameScreen() {
             key={display.character_id}
             display={display}
             character={char}
-            isSpeaking={isSpeaking && display.character_id === speakingCharId}
+            isSpeaking={effectiveIsSpeaking && display.character_id === speakingCharId}
           />
         );
       })}

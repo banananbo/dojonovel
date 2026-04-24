@@ -12,7 +12,7 @@ locations:
       - location_id: loc_station
         label: "赤羽駅前へ"
         condition: null
-    entry_scene: scene_danchi_morning
+    entry_scene: scene_danchi_return
 
   - id: loc_station
     name: "赤羽駅前"

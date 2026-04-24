@@ -17,4 +17,12 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/hooks'),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        editor: path.resolve(__dirname, 'editor.html'),
+      },
+    },
+  },
 })
