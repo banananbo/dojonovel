@@ -50,8 +50,13 @@ locations:
       - location_id: loc_slope
         label: "団地への坂へ"
         condition:
-          flag: flag_met_mentor
-          value: true
+          and:
+            - flag: flag_met_mentor
+              value: true
+            - flag: flag_examined_whiteboard
+              value: true
+            - flag: flag_examined_kids
+              value: true
     entry_scene: scene_coderdojo_default
 
   - id: loc_slope
