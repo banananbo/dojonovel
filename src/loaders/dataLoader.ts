@@ -36,6 +36,7 @@ function flattenScenes(raw: any[], parentDefaults: Partial<Scene> = {}): Scene[]
       result.push(...flattenScenes(child_scenes, {
         location_id: merged.location_id,
         background: merged.background,
+        bgm: merged.bgm,
       }));
     }
   }
