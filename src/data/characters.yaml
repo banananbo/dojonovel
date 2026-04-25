@@ -14,10 +14,12 @@ characters:
     name: "ユイ"
     name_flag: null
     voicevox_speaker_id: 1
+    y_offset: -250
     sprites:
-      normal: characters/yui/normal.png
-      happy: characters/yui/happy.png
-      surprise: characters/yui/surprise.png
+      normal: characters/yui/girl_normal.png
+      happy: characters/yui/girl_normal.png
+      surprise: characters/yui/girl_normal.png
+      talking: characters/yui/girl_talking.png
 
   - id: char_mentor
     name: "田中メンター"
