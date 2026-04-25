@@ -70,7 +70,7 @@ export function GameScreen() {
         locationName={location?.name}
       />
 
-      {state.currentCharacters.map((display) => {
+      {state.phase !== 'examine' && state.currentCharacters.map((display) => {
         const char = masterData.characters[display.character_id];
         if (!char) return null;
         return (
