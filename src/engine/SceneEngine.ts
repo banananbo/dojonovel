@@ -38,6 +38,10 @@ export function transitionTo(
   next = { ...next, flags: applyFlagsSet(scene.flags_set, next.flags) };
   next = tryGiveItems(scene.item_give, next);
 
+  if (scene.messages.length === 0) {
+    return resolveAfterMessages(next, scene, masterData);
+  }
+
   return next;
 }
 
