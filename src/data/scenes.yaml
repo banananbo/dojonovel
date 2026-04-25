@@ -303,6 +303,14 @@ scenes:
         label: 子供たち
         next_scene: scene_examine_coderdojo_pcs
         condition: null
+      - id: area_dojo_drink
+        x: 90
+        "y": 395
+        width: 35
+        height: 62
+        label: ドリンク
+        next_scene: scene_examine_coderdojo_pcs
+        condition: null
     flags_set:
       - flag: flag_arrived_coderdojo
         value: true
@@ -318,6 +326,9 @@ scenes:
             voice_character_id: null
           - text: 何を作ろうか……
             voice_character_id: null
+        flags_set:
+          - flag: flag_examined_whiteboard
+            value: true
         next_scene: null
       - id: scene_examine_coderdojo_pcs
         messages:
@@ -325,6 +336,9 @@ scenes:
             voice_character_id: null
           - text: 隣の子のコードが見えた。ゲームっぽいものを作っているみたい。
             voice_character_id: null
+        flags_set:
+          - flag: flag_examined_kids
+            value: true
         next_scene: null
       - id: scene_talk_coderdojo
         messages:
@@ -364,6 +378,13 @@ scenes:
               - flag: flag_met_mentor
                 value: true
             next_scene: null
+      - id: scene_examine_dojo_drink
+        messages:
+          - text: ラッキー　ドリンク見つけた
+            voice_character_id: char_hero
+        flags_set:
+          - flag: ""
+            value: true
   - id: scene_use_candy
     overlay_image: cg/candy_happy.jpg
     messages:
@@ -374,7 +395,6 @@ scenes:
       - text: ……なんだか、すごく幸せな気持ちになった。
         voice_character_id: char_hero
     next_scene: null
-
   - id: scene_slope_default
     location_id: loc_slope
     background: backgrounds/slope_day.jpg

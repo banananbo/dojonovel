@@ -34,6 +34,16 @@ flags:
     default: false
     description: "田中メンターに話しかけた"
 
+  - id: flag_examined_whiteboard
+    type: boolean
+    default: false
+    description: "CoderDojoのホワイトボードを調べた"
+
+  - id: flag_examined_kids
+    type: boolean
+    default: false
+    description: "CoderDojoの子供たちを調べた"
+
   - id: flag_chapter
     type: integer
     default: 1
