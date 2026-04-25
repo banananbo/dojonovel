@@ -1,0 +1,56 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 50;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.frame {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  object-fit: cover;
+  animation: cgFadeIn 0.5s ease forwards;
+}
+
+.left {
+  left: 0;
+  width: 52%;
+}
+
+.right {
+  right: 0;
+  width: 52%;
+}
+
+.center {
+  left: 0;
+  width: 100%;
+}
+
+@keyframes cgFadeIn {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.progress {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #444;
+}
+
+.dotActive {
+  background: #c8b890;
+}

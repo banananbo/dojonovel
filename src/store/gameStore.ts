@@ -6,7 +6,7 @@ import type { SaveData } from '../storage/StorageInterface';
 import { SAVE_DATA_VERSION } from '../storage/StorageInterface';
 import { getMasterData } from '../loaders/dataLoader';
 import { initializeFlags } from '../engine/FlagEngine';
-import { transitionTo, advanceMessage, selectChoice, pushHistory } from '../engine/SceneEngine';
+import { transitionTo, advanceMessage, selectChoice, pushHistory, completeCgSequence } from '../engine/SceneEngine';
 import { executeCommand } from '../engine/CommandEngine';
 import { moveTo } from '../engine/LocationEngine';
 import { useItem } from '../engine/ItemEngine';
@@ -25,6 +25,7 @@ interface GameStore {
   selectChoice: (index: number) => void;
   executeCommand: (commandId: string) => void;
   selectTalkTarget: (index: number) => void;
+  completeCgSequence: () => void;
   moveToLocation: (locationId: string) => void;
   clickArea: (areaId: string) => void;
   useItem: (itemId: string) => void;
@@ -130,6 +131,12 @@ export const useGameStore = create<GameStore>((set, get) => {
       if (!target) return;
       const withHistory = pushHistory(state.currentSceneId, state);
       set({ state: { ...transitionTo(target.sceneId, withHistory, masterData), talkCandidates: [] } });
+    },
+
+    completeCgSequence: () => {
+      const { state, masterData } = get();
+      if (state.phase !== 'cg_sequence') return;
+      set({ state: completeCgSequence(state, masterData) });
     },
 
     moveToLocation: (locationId: string) => {

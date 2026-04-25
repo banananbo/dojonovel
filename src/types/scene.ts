@@ -51,6 +51,11 @@ export interface FlagSet {
   value: FlagValue;
 }
 
+export interface CgFrame {
+  src: string;
+  position: 'left' | 'right' | 'center';
+}
+
 export interface ItemGive {
   item_id: string;
   condition: Condition | null;
@@ -78,5 +83,6 @@ export interface Scene {
   flags_set?: FlagSet[];
   item_give?: ItemGive[];
   item_remove?: string[];
+  cg_sequence?: CgFrame[];
   game_end?: boolean;
 }
