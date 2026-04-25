@@ -12,6 +12,11 @@ locations:
       - location_id: loc_station
         label: "赤羽駅前へ"
         condition: null
+      - location_id: loc_slope
+        label: "団地への坂へ"
+        condition:
+          flag: flag_visited_slope
+          value: true
     entry_scene: scene_danchi_morning
 
   - id: loc_station
