@@ -418,6 +418,31 @@ scenes:
       - id: scene_ending_credits
         messages: []
         game_end: true
+        cg_sequence:
+          - src: cg/ending_01.jpg
+            position: right
+          - src: cg/ending_02.jpg
+            position: right
+          - src: cg/ending_03.jpg
+            position: right
+          - src: cg/ending_04.jpg
+            position: left
+          - src: cg/ending_05.jpg
+            position: left
+      - id: scene_ending_cg_sequence
+        messages: []
+        game_end: true
+        cg_sequence:
+          - src: cg/ending_01.jpg
+            position: right
+          - src: cg/ending_02.jpg
+            position: right
+          - src: cg/ending_03.jpg
+            position: right
+          - src: cg/ending_04.jpg
+            position: left
+          - src: cg/ending_05.jpg
+            position: left
   - id: scene_coderdojo_default
     location_id: loc_coderdojo
     background: backgrounds/coderdojo.jpg

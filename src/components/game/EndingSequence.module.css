@@ -1,0 +1,129 @@
+.root {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 100;
+  overflow: hidden;
+  display: flex;
+}
+
+/* ── Split layout (phase 1 & 2) ── */
+.leftPanel,
+.rightPanel {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #1a1a2e;
+  left: 50%;
+  z-index: 10;
+}
+
+/* ── Credits scroll ── */
+.scrollWrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0 28px 300px;
+  animation-name: scrollUp;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes scrollUp {
+  from { transform: translateY(620px); }
+  to   { transform: translateY(-100%); }
+}
+
+.creditMainTitle {
+  font-size: 20px;
+  color: #c8b890;
+  font-weight: bold;
+  letter-spacing: 4px;
+  margin: 120px 0 80px;
+}
+
+.creditSection {
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 2px;
+  margin: 4px 0;
+}
+
+.creditName {
+  font-size: 15px;
+  color: #999;
+  letter-spacing: 1px;
+  margin: 2px 0 22px;
+}
+
+.creditSpacer {
+  height: 48px;
+}
+
+/* ── CG panels ── */
+.cgPanel {
+  position: absolute;
+  inset: 0;
+}
+
+.cgPanelImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: cgFadeIn 1.2s ease forwards;
+}
+
+@keyframes cgFadeIn {
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Phase 3: Fin ── */
+.finRoot {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: cgFadeIn 2s ease forwards;
+}
+
+.finText {
+  position: relative;
+  z-index: 1;
+  font-size: 52px;
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+  letter-spacing: 12px;
+  text-shadow: 0 0 40px rgba(200, 184, 144, 0.8);
+  opacity: 0;
+  animation: finFadeIn 1.5s ease 1.5s forwards;
+}
+
+@keyframes finFadeIn {
+  from { opacity: 0; letter-spacing: 20px; }
+  to   { opacity: 1; letter-spacing: 12px; }
+}
