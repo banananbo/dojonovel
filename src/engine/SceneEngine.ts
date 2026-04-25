@@ -71,6 +71,10 @@ function resolveAfterMessages(
   scene: Scene,
   masterData: MasterData,
 ): GameState {
+  if (scene.game_end) {
+    return { ...state, phase: 'ending' };
+  }
+
   const branches = scene.branches;
 
   if (branches?.type === 'choice' && branches.choices && branches.choices.length > 0) {

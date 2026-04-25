@@ -1,0 +1,67 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 100;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.scroll {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0 60px 200px;
+  animation: scrollUp 28s linear forwards;
+}
+
+@keyframes scrollUp {
+  from { transform: translateY(100vh); }
+  to   { transform: translateY(-100%); }
+}
+
+.mainTitle {
+  font-size: 26px;
+  color: #c8b890;
+  font-weight: bold;
+  letter-spacing: 6px;
+  margin: 160px 0 100px;
+}
+
+.section {
+  font-size: 13px;
+  color: #666;
+  letter-spacing: 2px;
+  margin: 6px 0;
+}
+
+.name {
+  font-size: 17px;
+  color: #aaa;
+  letter-spacing: 2px;
+  margin: 4px 0 28px;
+}
+
+.spacer {
+  height: 60px;
+}
+
+.fin {
+  font-size: 38px;
+  color: #c8b890;
+  letter-spacing: 10px;
+  font-style: italic;
+  margin: 120px 0 200px;
+}
+
+.hint {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  color: #333;
+  pointer-events: none;
+}

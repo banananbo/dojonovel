@@ -10,7 +10,8 @@ export type GamePhase =
   | 'examine'
   | 'inventory'
   | 'system_menu'
-  | 'talk_select';
+  | 'talk_select'
+  | 'ending';
 
 export interface TalkCandidate {
   characterId: string;

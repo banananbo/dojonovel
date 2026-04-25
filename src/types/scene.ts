@@ -78,4 +78,5 @@ export interface Scene {
   flags_set?: FlagSet[];
   item_give?: ItemGive[];
   item_remove?: string[];
+  game_end?: boolean;
 }
