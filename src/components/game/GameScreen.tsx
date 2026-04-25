@@ -13,6 +13,7 @@ import { ClickableAreaOverlay } from './ClickableArea';
 import { MapView } from './MapView';
 import { InventoryPanel } from '../inventory/InventoryPanel';
 import { SystemMenu } from '../system/SystemMenu';
+import { EndingScreen } from './EndingScreen';
 import styles from './GameScreen.module.css';
 
 export function GameScreen() {
@@ -163,11 +164,17 @@ export function GameScreen() {
         />
       )}
 
-      <SystemMenu
-        onGetSaveData={toSaveData}
-        onLoad={loadGame}
-        onTitle={goToTitle}
-      />
+      {state.phase !== 'ending' && (
+        <SystemMenu
+          onGetSaveData={toSaveData}
+          onLoad={loadGame}
+          onTitle={goToTitle}
+        />
+      )}
+
+      {state.phase === 'ending' && (
+        <EndingScreen onTitle={goToTitle} />
+      )}
     </div>
   );
 }

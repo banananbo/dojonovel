@@ -403,20 +403,8 @@ scenes:
             voice_character_id: char_hero
         next_scene: scene_ending_credits
       - id: scene_ending_credits
-        messages:
-          - text: "―― 赤羽の一日 ――"
-            voice_character_id: null
-          - text: " "
-            voice_character_id: null
-          - text: シナリオ・制作
-            voice_character_id: null
-          - text: CoderDojo赤羽
-            voice_character_id: null
-          - text: " "
-            voice_character_id: null
-          - text: "── END ──"
-            voice_character_id: null
-        next_scene: null
+        messages: []
+        game_end: true
   - id: scene_coderdojo_default
     location_id: loc_coderdojo
     background: backgrounds/coderdojo.jpg
