@@ -419,16 +419,18 @@ scenes:
         messages: []
         game_end: true
         cg_sequence:
-          - src: cg/ending_01.jpg
+          - src: cg/juice.jpg
             position: right
-          - src: cg/ending_02.jpg
+          - src: cg/game_man.jpg
             position: right
-          - src: cg/ending_03.jpg
+          - src: cg/happy_dojo.jpg
             position: right
-          - src: cg/ending_04.jpg
+          - src: cg/mirai.jpg
             position: left
-          - src: cg/ending_05.jpg
+          - src: cg/dog.jpg
             position: left
+          - src: cg/ending_fin.jpg
+            position: center
       - id: scene_ending_cg_sequence
         messages: []
         game_end: true
@@ -443,6 +445,8 @@ scenes:
             position: left
           - src: cg/ending_05.jpg
             position: left
+          - src: cg/ending_fin.jpg
+            position: center
   - id: scene_coderdojo_default
     location_id: loc_coderdojo
     background: backgrounds/coderdojo.jpg
