@@ -202,135 +202,221 @@ scenes:
     location_id: loc_station
     background: backgrounds/akabane.jpg
     bgm: audio/bgm/station.mp3
-    characters:
-      - character_id: char_hero
-        position: left
-        expression: normal
-    messages:
-      - text: 赤羽駅の改札を出たところだ。
-        voice_character_id: null
-      - text: 休日の昼間、人が多く賑わっている。
-        voice_character_id: null
-    clickable_areas:
-      - id: area_station_hiroba
-        x: 254
-        "y": 340
-        width: 100
-        height: 88
-        label: 広場
-        next_scene: scene_examine_station_hiroba
-        condition: null
-      - id: area_nazo02
-        x: 397
-        "y": 356
-        width: 38
-        height: 42
-        label: ？？
-        next_scene: scene_examine_station_nazo
-        condition: null
-    talkable:
-      - character_id: char_yui
-        scene_id: scene_talk_station
-        condition:
-          flag: flag_met_college_student
-          value: false
+    messages: []
     branches:
-      type: none
+      type: auto
+      choices:
+        - condition:
+            has_item: item_gummy
+          next_scene: scene_station_with_student
+        - condition: null
+          next_scene: scene_station_main
     child_scenes:
-      - id: scene_examine_station_hiroba
+      - id: scene_station_main
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
         messages:
-          - text: 駅前の広場を見た。
+          - text: 赤羽駅の改札を出たところだ。
             voice_character_id: null
-          - text: ゴミが落ちているなかに、見覚えのあるチラシがある。
+          - text: 休日の昼間、人が多く賑わっている。
             voice_character_id: null
-          - text: 「CoderDojo赤羽　本日開催！　参加無料　午前9時30分より」
-            voice_character_id: null
-          - text: チラシを一枚拾った！
-            voice_character_id: null
-        item_give:
-          - item_id: item_flyer
+        clickable_areas:
+          - id: area_station_hiroba
+            x: 254
+            "y": 340
+            width: 100
+            height: 88
+            label: 広場
+            next_scene: scene_examine_station_hiroba
             condition: null
-        flags_set:
-          - flag: flag_station_explored
-            value: true
-          - flag: flag_got_flyer
-            value: true
-        next_scene: null
-      - id: scene_examine_station_nazo
-        messages:
-          - text: あれはなんだろう。。
-            voice_character_id: null
-          - text: なんでもいいか、、
-            voice_character_id: null
-        next_scene: null
-      - id: scene_talk_station
-        messages:
-          - text: 辺りを見回すと……
-            voice_character_id: null
+          - id: area_nazo02
+            x: 397
+            "y": 356
+            width: 38
+            height: 42
+            label: ？？
+            next_scene: scene_examine_station_nazo
+            condition: null
+        talkable:
+          - character_id: char_yui
+            scene_id: scene_talk_station
+            condition:
+              flag: flag_met_college_student
+              value: false
         branches:
-          type: auto
-          choices:
-            - label: ""
-              condition:
-                flag: flag_met_yui
-                value: true
-              next_scene: scene_yui_already_met
-            - label: ""
-              condition: null
-              next_scene: scene_meet_yui
+          type: none
         child_scenes:
-          - id: scene_meet_yui
-            characters:
-              - character_id: char_yui
-                position: center
-                expression: surprise
+          - id: scene_examine_station_hiroba
             messages:
-              - text: 後ろから声がした。
+              - text: 駅前の広場を見た。
                 voice_character_id: null
-              - text: 「あっ、ケンじゃん！やっぱりいた。」
-                voice_character_id: char_yui
-                voice_style: normal
-              - text: 「今日CoderDojo行くでしょ？チラシもう見た？」
-                voice_character_id: char_yui
-                voice_style: normal
+              - text: ゴミが落ちているなかに、見覚えのあるチラシがある。
+                voice_character_id: null
+              - text: 「CoderDojo赤羽　本日開催！　参加無料　午前9時30分より」
+                voice_character_id: null
+              - text: チラシを一枚拾った！
+                voice_character_id: null
+            item_give:
+              - item_id: item_flyer
+                condition: null
+            flags_set:
+              - flag: flag_station_explored
+                value: true
+              - flag: flag_got_flyer
+                value: true
+            next_scene: null
+          - id: scene_examine_station_nazo
+            messages:
+              - text: あれはなんだろう。。
+                voice_character_id: null
+              - text: なんでもいいか、、
+                voice_character_id: null
+            next_scene: null
+          - id: scene_talk_station
+            messages:
+              - text: 辺りを見回すと……
+                voice_character_id: null
             branches:
-              type: choice
+              type: auto
               choices:
-                - label: 「うん、見たよ。一緒に行こう！」
+                - label: ""
                   condition:
-                    flag: flag_station_explored
+                    flag: flag_met_yui
                     value: true
-                  next_scene: scene_yui_lets_go
-                - label: 「あ、まだ見てない。ちょっと待ってて」
+                  next_scene: scene_yui_already_met
+                - label: ""
                   condition: null
-                  next_scene: null
+                  next_scene: scene_meet_yui
             child_scenes:
-              - id: scene_yui_lets_go
+              - id: scene_meet_yui
                 characters:
                   - character_id: char_yui
                     position: center
-                    expression: happy
+                    expression: surprise
                 messages:
-                  - text: 「やった！じゃ行こう！CoderDojo楽しみだね！」
+                  - text: 後ろから声がした。
+                    voice_character_id: null
+                  - text: 「あっ、ケンじゃん！やっぱりいた。」
                     voice_character_id: char_yui
                     voice_style: normal
-                  - text: ユイと合流した。
-                    voice_character_id: null
-                flags_set:
-                  - flag: flag_met_yui
-                    value: true
+                  - text: 「今日CoderDojo行くでしょ？チラシもう見た？」
+                    voice_character_id: char_yui
+                    voice_style: normal
                 branches:
-                  type: none
-          - id: scene_yui_already_met
-            characters:
-              - character_id: char_yui
-                position: right
-                expression: happy
-            messages:
-              - text: 「はーやーくー！行こうよ！」
-                voice_character_id: char_yui
-                voice_style: normal
-            next_scene: null
+                  type: choice
+                  choices:
+                    - label: 「うん、見たよ。一緒に行こう！」
+                      condition:
+                        flag: flag_station_explored
+                        value: true
+                      next_scene: scene_yui_lets_go
+                    - label: 「あ、まだ見てない。ちょっと待ってて」
+                      condition: null
+                      next_scene: null
+                child_scenes:
+                  - id: scene_yui_lets_go
+                    characters:
+                      - character_id: char_yui
+                        position: center
+                        expression: happy
+                    messages:
+                      - text: 「やった！じゃ行こう！CoderDojo楽しみだね！」
+                        voice_character_id: char_yui
+                        voice_style: normal
+                      - text: ユイと合流した。
+                        voice_character_id: null
+                    flags_set:
+                      - flag: flag_met_yui
+                        value: true
+                    branches:
+                      type: none
+              - id: scene_yui_already_met
+                characters:
+                  - character_id: char_yui
+                    position: right
+                    expression: happy
+                messages:
+                  - text: 「はーやーくー！行こうよ！」
+                    voice_character_id: char_yui
+                    voice_style: normal
+                next_scene: null
+      - id: scene_station_with_student
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
+          - character_id: char_college_student
+            position: right
+            expression: normal
+        messages:
+          - text: 駅の広場に出ると、あの大学生がいた。
+            voice_character_id: null
+          - text: まだグミを探してウロウロしているみたいだ。
+            voice_character_id: null
+        talkable:
+          - character_id: char_college_student
+            scene_id: scene_talk_station_give_gummy
+        branches:
+          type: none
+      - id: scene_talk_station_give_gummy
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
+          - character_id: char_college_student
+            position: right
+            expression: normal
+        messages:
+          - text: 「あ、さっきの子！」
+            voice_character_id: char_college_student
+          - text: 「実は……これじゃないですか？」
+            voice_character_id: char_hero
+          - text: グミを取り出して、大学生に渡した。
+            voice_character_id: null
+          - text: 「え……っ！！これ、これだよ！！」
+            voice_character_id: char_college_student
+          - text: 「どこで！？どこにあったの！？」
+            voice_character_id: char_college_student
+          - text: 「団地のおばあさんが持ってて……」
+            voice_character_id: char_hero
+          - text: 「ありがとう！！ほんとにありがとう！！」
+            voice_character_id: char_college_student
+        item_remove:
+          - item_gummy
+        next_scene: scene_gummy_joy_cg
+      - id: scene_gummy_joy_cg
+        overlay_image: cg/gummy_joy.jpg
+        messages:
+          - text: 大学生の顔がぱっと明るくなった。
+            voice_character_id: null
+          - text: グミを口に入れて、しばらく目を閉じている。
+            voice_character_id: null
+          - text: 「……うまい。これだよ、これ。」
+            voice_character_id: char_college_student
+          - text: 「ありがとな。今日、最高の一日になったよ。」
+            voice_character_id: char_college_student
+          - text: ぼくも、なんかいい気持ちだった。
+            voice_character_id: char_hero
+          - text: グミひとつで、こんなことになるなんて。
+            voice_character_id: char_hero
+        next_scene: scene_ending_credits
+      - id: scene_ending_credits
+        messages:
+          - text: "―― 赤羽の一日 ――"
+            voice_character_id: null
+          - text: " "
+            voice_character_id: null
+          - text: シナリオ・制作
+            voice_character_id: null
+          - text: CoderDojo赤羽
+            voice_character_id: null
+          - text: " "
+            voice_character_id: null
+          - text: "── END ──"
+            voice_character_id: null
+        next_scene: null
   - id: scene_coderdojo_default
     location_id: loc_coderdojo
     background: backgrounds/coderdojo.jpg
