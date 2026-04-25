@@ -5,6 +5,13 @@ import type { MasterData } from '../loaders/dataLoader';
 import type { SaveData } from '../storage/StorageInterface';
 import { SAVE_DATA_VERSION } from '../storage/StorageInterface';
 import { getMasterData } from '../loaders/dataLoader';
+
+export interface DebugStartConfig {
+  sceneId: string;
+  locationId: string;
+  flags?: Record<string, boolean | number | string>;
+  inventory?: string[];
+}
 import { initializeFlags } from '../engine/FlagEngine';
 import { transitionTo, advanceMessage, selectChoice, pushHistory, completeCgSequence } from '../engine/SceneEngine';
 import { executeCommand } from '../engine/CommandEngine';
@@ -18,6 +25,7 @@ interface GameStore {
   playtimeStart: number;
 
   startNewGame: () => void;
+  startDebugGame: (config: DebugStartConfig) => void;
   loadGame: (saveData: SaveData) => void;
   toSaveData: () => SaveData;
 
@@ -62,6 +70,20 @@ export const useGameStore = create<GameStore>((set, get) => {
       const fresh = buildInitialState(md);
       const started = transitionTo(INITIAL_SCENE_ID, { ...fresh, phase: 'message' }, md);
       set({ state: started, playtimeStart: Date.now() });
+    },
+
+    startDebugGame: (config: DebugStartConfig) => {
+      const md = get().masterData;
+      const base = buildInitialState(md);
+      const seed: GameState = {
+        ...base,
+        currentSceneId: config.sceneId,
+        currentLocationId: config.locationId,
+        flags: { ...base.flags, ...(config.flags ?? {}) },
+        inventory: config.inventory ?? [],
+        phase: 'message',
+      };
+      set({ state: transitionTo(config.sceneId, seed, md), playtimeStart: Date.now() });
     },
 
     loadGame: (saveData: SaveData) => {
