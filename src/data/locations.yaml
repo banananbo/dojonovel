@@ -78,6 +78,6 @@ locations:
         label: "CoderDojoへ戻る"
         condition: null
       - location_id: loc_danchi
-        label: "団地へ下りる"
+        label: "団地へ上る"
         condition: null
     entry_scene: scene_slope_default

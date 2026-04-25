@@ -429,7 +429,7 @@ scenes:
             position: left
           - src: cg/dog.jpg
             position: left
-          - src: cg/ending_fin.jpg
+          - src: cg/dog.jpg
             position: center
       - id: scene_ending_cg_sequence
         messages: []
@@ -599,6 +599,16 @@ scenes:
       - text: アメをなめた。
         voice_character_id: null
       - text: 甘くておいしい。
+        voice_character_id: null
+      - text: ……なんだか、すごく幸せな気持ちになった。
+        voice_character_id: char_hero
+    next_scene: null
+  - id: scene_use_juice
+    overlay_image: cg/happy_juice.jpg
+    messages:
+      - text: ジュースを飲んだ。
+        voice_character_id: null
+      - text: あっさりとしていて、とてもおいしい。
         voice_character_id: null
       - text: ……なんだか、すごく幸せな気持ちになった。
         voice_character_id: char_hero

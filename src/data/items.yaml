@@ -33,7 +33,7 @@ items:
     description: "置いてあったジュース。冷たくておいしい。"
     icon: null
     usable: true
-    use_scene: scene_use_candy
+    use_scene: scene_use_juice
     use_condition: null
     stackable: false
     category: consumable

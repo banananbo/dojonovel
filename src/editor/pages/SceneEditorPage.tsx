@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useYamlFs, findScene, updateSceneInTree, addSceneToTree, collectAllSceneIds } from '../hooks/useYamlFs';
-import type { RawScene, RawCharacterDisplay, RawFlagSet, RawChoice } from '../hooks/useYamlFs';
+import type { RawScene, RawCharacterDisplay, RawFlagSet, RawChoice, RawItemGive, RawItem } from '../hooks/useYamlFs';
 import { SceneList } from '../components/SceneList';
 import { MessageEditor } from '../components/MessageEditor';
 
@@ -12,7 +12,7 @@ interface SceneEditorPageProps {
 }
 
 export function SceneEditorPage({ sharedDirHandle, onDirOpen }: SceneEditorPageProps) {
-  const { dirHandle, rawScenes, rawCharacters, rawLocations, error, openDirectory, saveScenes } = useYamlFs();
+  const { dirHandle, rawScenes, rawCharacters, rawLocations, rawItems, error, openDirectory, saveScenes } = useYamlFs();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [draft, setDraft] = useState<RawScene | null>(null);
   const [dirty, setDirty] = useState(false);
@@ -157,6 +157,15 @@ export function SceneEditorPage({ sharedDirHandle, onDirOpen }: SceneEditorPageP
                   onChange={(f) => patch({ flags_set: f.length ? f : undefined })}
                 />
               </Section>
+
+              {/* アイテム付与 */}
+              <Section title="アイテム付与 (item_give)">
+                <ItemGiveEditor
+                  items={draft.item_give ?? []}
+                  allItems={rawItems}
+                  onChange={(items) => patch({ item_give: items.length ? items : undefined })}
+                />
+              </Section>
             </div>
           )}
         </div>
@@ -265,6 +274,50 @@ function BranchEditor({ branches, allSceneIds, onChange }: {
           ))}
           <button className="primary" onClick={addChoice} style={{ width: '100%' }}>＋ 選択肢追加</button>
         </div>
+      )}
+    </div>
+  );
+}
+
+/* ── アイテム付与エディタ ── */
+function ItemGiveEditor({ items, allItems, onChange }: {
+  items: RawItemGive[];
+  allItems: RawItem[];
+  onChange: (items: RawItemGive[]) => void;
+}) {
+  function update(i: number, item_id: string) {
+    onChange(items.map((it, idx) => idx === i ? { ...it, item_id } : it));
+  }
+  function remove(i: number) { onChange(items.filter((_, idx) => idx !== i)); }
+  function add() { onChange([...items, { item_id: allItems[0]?.id ?? '', condition: null }]); }
+
+  return (
+    <div>
+      {items.map((it, i) => (
+        <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 6, alignItems: 'center' }}>
+          <select
+            value={it.item_id}
+            style={{ flex: 1 }}
+            onChange={(e) => update(i, e.target.value)}
+          >
+            {allItems.map((item) => (
+              <option key={item.id} value={item.id}>{item.name} ({item.id})</option>
+            ))}
+            {!allItems.find((item) => item.id === it.item_id) && (
+              <option value={it.item_id}>{it.item_id}</option>
+            )}
+          </select>
+          {it.condition != null && (
+            <span style={{ color: '#ffb300', fontSize: 11, flexShrink: 0 }}>条件あり</span>
+          )}
+          <button className="danger" onClick={() => remove(i)}>×</button>
+        </div>
+      ))}
+      <button className="primary" onClick={add} style={{ width: '100%' }} disabled={allItems.length === 0}>
+        ＋ アイテム追加
+      </button>
+      {allItems.length === 0 && (
+        <div style={{ color: '#666', fontSize: 11, marginTop: 4 }}>items.yaml が読み込まれていません</div>
       )}
     </div>
   );
