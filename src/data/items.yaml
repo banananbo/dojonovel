@@ -28,3 +28,22 @@ items:
     use_condition: null
     stackable: false
     category: consumable
+  - id: item_drink
+    name: "ジュース"
+    description: "置いてあったジュース。冷たくておいしい。"
+    icon: null
+    usable: true
+    use_scene: scene_use_candy
+    use_condition: null
+    stackable: false
+    category: consumable
+
+  - id: item_gummy
+    name: "新発売のグミ"
+    description: "おばちゃんのポケットから出てきたグミ。大学生が探していたやつだ。"
+    icon: null
+    usable: false
+    use_scene: null
+    use_condition: null
+    stackable: false
+    category: key_item

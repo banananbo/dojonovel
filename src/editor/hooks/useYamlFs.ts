@@ -13,7 +13,8 @@ export interface RawScene {
   branches?: RawBranches;
   next_scene?: string | null;
   flags_set?: RawFlagSet[];
-  item_give?: unknown[];
+  item_give?: RawItemGive[];
+  item_remove?: string[];
   child_scenes?: RawScene[];
   [key: string]: unknown;
 }
@@ -58,6 +59,11 @@ export interface RawFlagSet {
   value: boolean | number | string;
 }
 
+export interface RawItemGive {
+  item_id: string;
+  condition: unknown | null;
+}
+
 export interface RawCharacter {
   id: string;
   name: string;
@@ -68,11 +74,17 @@ export interface RawLocation {
   name: string;
 }
 
+export interface RawItem {
+  id: string;
+  name: string;
+}
+
 export function useYamlFs() {
   const [dirHandle, setDirHandle] = useState<FileSystemDirectoryHandle | null>(null);
   const [rawScenes, setRawScenes] = useState<RawScene[]>([]);
   const [rawCharacters, setRawCharacters] = useState<RawCharacter[]>([]);
   const [rawLocations, setRawLocations] = useState<RawLocation[]>([]);
+  const [rawItems, setRawItems] = useState<RawItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const openDirectory = useCallback(async () => {
@@ -88,15 +100,17 @@ export function useYamlFs() {
         return yaml.load(await file.text()) as T;
       }
 
-      const [scenesData, charsData, locsData] = await Promise.all([
+      const [scenesData, charsData, locsData, itemsData] = await Promise.all([
         readYaml<{ scenes: RawScene[] }>('scenes.yaml'),
         readYaml<{ characters: RawCharacter[] }>('characters.yaml'),
         readYaml<{ locations: RawLocation[] }>('locations.yaml'),
+        readYaml<{ items: RawItem[] }>('items.yaml'),
       ]);
 
       setRawScenes(scenesData.scenes ?? []);
       setRawCharacters(charsData.characters ?? []);
       setRawLocations(locsData.locations ?? []);
+      setRawItems(itemsData.items ?? []);
       setError(null);
     } catch (e) {
       if ((e as Error).name !== 'AbortError') setError((e as Error).message);
@@ -119,7 +133,7 @@ export function useYamlFs() {
     }
   }, [dirHandle]);
 
-  return { dirHandle, rawScenes, rawCharacters, rawLocations, error, openDirectory, saveScenes };
+  return { dirHandle, rawScenes, rawCharacters, rawLocations, rawItems, error, openDirectory, saveScenes };
 }
 
 export function findScene(rawScenes: RawScene[], id: string): RawScene | null {
