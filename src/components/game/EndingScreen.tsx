@@ -6,7 +6,7 @@ interface EndingScreenProps {
 
 export function EndingScreen({ onTitle }: EndingScreenProps) {
   return (
-    <div className={styles.overlay} onClick={onTitle}>
+    <div className={styles.overlay}>
       <div className={styles.scroll} onAnimationEnd={onTitle}>
         <div className={styles.mainTitle}>赤羽の一日</div>
 
@@ -35,7 +35,7 @@ export function EndingScreen({ onTitle }: EndingScreenProps) {
         <div className={styles.fin}>Fin</div>
       </div>
 
-      <div className={styles.hint}>クリックでタイトルへ</div>
+
     </div>
   );
 }
