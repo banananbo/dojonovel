@@ -50,10 +50,7 @@ export function InventoryPanel({ state, masterData, onUse, onClose }: InventoryP
               <Button
                 label="使う"
                 disabled={!canUseItem(selected.id, state, masterData)}
-                onClick={() => {
-                  onUse(selected.id);
-                  onClose();
-                }}
+                onClick={() => onUse(selected.id)}
               />
             )}
             <Button label="閉じる" onClick={onClose} size="small" />
