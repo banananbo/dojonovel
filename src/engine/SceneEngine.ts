@@ -24,7 +24,7 @@ export function transitionTo(
   };
 
   if (scene.location_id && scene.location_id !== state.currentLocationId) {
-    next = { ...next, currentLocationId: scene.location_id };
+    next = { ...next, currentLocationId: scene.location_id, currentCharacters: [] };
   }
 
   if (scene.characters !== undefined) {
