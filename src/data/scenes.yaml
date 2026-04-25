@@ -555,4 +555,8 @@ scenes:
             voice_character_id: char_yui
           - text: 「あのグミ、私も気になってた！どこで売ってるんだろうね。」
             voice_character_id: char_yui
+          - text: 「……あ、待って。前に団地のおばちゃんが食べてたの見たかも。」
+            voice_character_id: char_yui
+          - text: 「団地に戻って、おばちゃんに聞いてみたら？」
+            voice_character_id: char_yui
         next_scene: null
