@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { AreaEditorPage } from './pages/AreaEditorPage';
 import { SceneEditorPage } from './pages/SceneEditorPage';
+import { TestPlayPage } from './pages/TestPlayPage';
 
-type Tab = 'area' | 'scene';
+type Tab = 'scene' | 'area' | 'test';
 
 export function EditorApp() {
   const [tab, setTab] = useState<Tab>('scene');
@@ -22,9 +23,12 @@ export function EditorApp() {
       <div style={{ display: 'flex', background: '#0d0d1a', borderBottom: '1px solid #222', flexShrink: 0 }}>
         <button style={tabStyle('scene')} onClick={() => setTab('scene')}>シーンエディタ</button>
         <button style={tabStyle('area')} onClick={() => setTab('area')}>エリアエディタ</button>
+        <button style={tabStyle('test')} onClick={() => setTab('test')}>テストプレイ</button>
       </div>
-      <div style={{ flex: 1, overflow: 'hidden' }}>
-        {tab === 'scene' ? <SceneEditorPage /> : <AreaEditorPage />}
+      <div style={{ flex: 1, overflow: 'auto' }}>
+        {tab === 'scene' && <SceneEditorPage />}
+        {tab === 'area' && <AreaEditorPage />}
+        {tab === 'test' && <TestPlayPage />}
       </div>
     </div>
   );
