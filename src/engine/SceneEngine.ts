@@ -115,13 +115,7 @@ export function selectChoice(
   const scene = masterData.scenes[state.currentSceneId];
   if (!scene?.branches?.choices) return state;
 
-  const ctx = {
-    flags: state.flags,
-    inventory: state.inventory,
-    locationId: state.currentLocationId,
-  };
-  const available = scene.branches.choices.filter((c) => evaluateCondition(c.condition, ctx));
-  const choice = available[choiceIndex];
+  const choice = scene.branches.choices[choiceIndex];
   if (!choice) return state;
 
   if (choice.next_scene) {
