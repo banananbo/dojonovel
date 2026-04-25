@@ -11,6 +11,7 @@ export type GamePhase =
   | 'inventory'
   | 'system_menu'
   | 'talk_select'
+  | 'cg_sequence'
   | 'ending';
 
 export interface TalkCandidate {

@@ -13,6 +13,7 @@ import { ClickableAreaOverlay } from './ClickableArea';
 import { MapView } from './MapView';
 import { InventoryPanel } from '../inventory/InventoryPanel';
 import { SystemMenu } from '../system/SystemMenu';
+import { CgSequencePlayer } from './CgSequencePlayer';
 import { EndingScreen } from './EndingScreen';
 import styles from './GameScreen.module.css';
 
@@ -24,6 +25,7 @@ export function GameScreen() {
     selectChoice,
     executeCommand,
     selectTalkTarget,
+    completeCgSequence,
     moveToLocation,
     clickArea,
     useItem,
@@ -161,6 +163,13 @@ export function GameScreen() {
           masterData={masterData}
           onUse={useItem}
           onClose={closeOverlay}
+        />
+      )}
+
+      {state.phase === 'cg_sequence' && scene?.cg_sequence && (
+        <CgSequencePlayer
+          frames={scene.cg_sequence}
+          onComplete={completeCgSequence}
         />
       )}
 

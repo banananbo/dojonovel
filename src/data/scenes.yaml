@@ -198,6 +198,19 @@ scenes:
             voice_character_id: char_hero
         location_id: loc_danchi
         next_scene: null
+      - id: scene_examine_dog
+        messages:
+          - text: しかしなんだあいつ、、こっち見てるぞ
+            voice_character_id: char_hero
+    clickable_areas:
+      - id: area_danchi_dog
+        x: 439
+        "y": 348
+        width: 71
+        height: 79
+        label: ""
+        next_scene: scene_examine_dog
+        condition: null
   - id: scene_station_default
     location_id: loc_station
     background: backgrounds/akabane.jpg
@@ -686,11 +699,11 @@ scenes:
           type: none
       - id: scene_talk_slope_yui
         messages:
-          - text: 「さっきの大学生、グミ探してたんだって？」
-            voice_character_id: char_yui
+          - text: 「そういえばさ、新発売のグミって知ってる？」
+            voice_character_id: char_hero
           - text: 「あのグミ、私も気になってた！どこで売ってるんだろうね。」
             voice_character_id: char_yui
-          - text: 「……あ、待って。前に団地のおばちゃんが食べてたの見たかも。」
+          - text: 「たしか団地のおばちゃんもはまってるって聞いたよ。」
             voice_character_id: char_yui
           - text: 「団地に戻って、おばちゃんに聞いてみたら？」
             voice_character_id: char_yui

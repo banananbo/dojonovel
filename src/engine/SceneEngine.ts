@@ -42,6 +42,9 @@ export function transitionTo(
   }
 
   if (scene.messages.length === 0) {
+    if (scene.cg_sequence?.length) {
+      return { ...next, phase: 'cg_sequence' };
+    }
     return resolveAfterMessages(next, scene, masterData);
   }
 
@@ -161,6 +164,12 @@ function toCommandPhase(
   _masterData: MasterData,
 ): GameState {
   return { ...state, phase: 'command' };
+}
+
+export function completeCgSequence(state: GameState, masterData: MasterData): GameState {
+  const scene = masterData.scenes[state.currentSceneId];
+  if (!scene) return state;
+  return resolveAfterMessages(state, scene, masterData);
 }
 
 export function pushHistory(sceneId: string, state: GameState): GameState {
