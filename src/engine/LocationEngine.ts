@@ -32,6 +32,7 @@ export function moveTo(
   const nextState: GameState = {
     ...state,
     currentLocationId: targetLocationId,
+    currentCharacters: [],
     sceneHistory: [],
     phase: 'message',
   };
