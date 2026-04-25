@@ -2,7 +2,7 @@ scenes:
   - id: scene_danchi_morning
     location_id: loc_danchi
     background: backgrounds/danchimae.jpg
-    bgm: audio/bgm/piano.mp3
+    bgm: audio/bgm/danchi.mp3
     messages: []
     branches:
       type: auto
@@ -159,13 +159,13 @@ scenes:
         label: 広場
         next_scene: scene_examine_station_hiroba
         condition: null
-      - id: area_kiosk
-        x: 560
-        "y": 210
-        width: 130
-        height: 110
-        label: キオスク
-        next_scene: scene_examine_kiosk
+      - id: area_nazo02
+        x: 397
+        "y": 356
+        width: 38
+        height: 42
+        label: ？？
+        next_scene: scene_examine_station_nazo
         condition: null
     talkable:
       - character_id: char_yui
@@ -179,7 +179,7 @@ scenes:
             voice_character_id: null
           - text: ゴミが落ちているなかに、見覚えのあるチラシがある。
             voice_character_id: null
-          - text: 「CoderDojo赤羽　本日開催！　参加無料　午後9時30分より」
+          - text: 「CoderDojo赤羽　本日開催！　参加無料　午前9時30分より」
             voice_character_id: null
           - text: チラシを一枚拾った！
             voice_character_id: null
@@ -192,11 +192,11 @@ scenes:
           - flag: flag_got_flyer
             value: true
         next_scene: null
-      - id: scene_examine_kiosk
+      - id: scene_examine_station_nazo
         messages:
-          - text: キオスクが並んでいる。雑誌や飲み物が売られている。
+          - text: あれはなんだろう。。
             voice_character_id: null
-          - text: 今は特に何も買わなくていいか。
+          - text: なんでもいいか、、
             voice_character_id: null
         next_scene: null
       - id: scene_talk_station
@@ -374,3 +374,40 @@ scenes:
       - text: ……なんだか、すごく幸せな気持ちになった。
         voice_character_id: char_hero
     next_scene: null
+
+  - id: scene_slope_default
+    location_id: loc_slope
+    background: backgrounds/slope_day.jpg
+    bgm: audio/bgm/piano.mp3
+    characters:
+      - character_id: char_hero
+        position: left
+        expression: normal
+    messages:
+      - text: 道場が終わったあと、ぼくはなんとなく坂道を歩いていた。
+        voice_character_id: null
+      - text: CoderDojoで教わったこと、ゲームを作るってどんな感じなんだろう。
+        voice_character_id: char_hero
+      - text: 坂の途中から、団地の建物が並ぶ景色が見えた。
+        voice_character_id: null
+      - text: ……なんか、飽きてきたな。
+        voice_character_id: char_hero
+    clickable_areas:
+      - id: area_slope_view
+        x: 300
+        "y": 200
+        width: 200
+        height: 150
+        label: 坂の眺め
+        next_scene: scene_examine_slope_view
+        condition: null
+    branches:
+      type: none
+    child_scenes:
+      - id: scene_examine_slope_view
+        messages:
+          - text: 赤羽の街が見渡せる。団地、線路、遠くにビル。
+            voice_character_id: null
+          - text: ここから見ると、自分がいつも歩いてる場所がちっぽけに見える。
+            voice_character_id: char_hero
+        next_scene: null

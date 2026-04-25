@@ -47,4 +47,27 @@ locations:
       - location_id: loc_station
         label: "駅前へ戻る"
         condition: null
+      - location_id: loc_slope
+        label: "団地への坂へ"
+        condition:
+          flag: flag_met_mentor
+          value: true
     entry_scene: scene_coderdojo_default
+
+  - id: loc_slope
+    name: "団地への坂"
+    description: "CoderDojoから団地へ続く緩やかな坂道。赤羽の街が見渡せる。"
+    background_default: backgrounds/slope_day.jpg
+    default_commands:
+      - cmd_examine
+      - cmd_talk
+      - cmd_move
+      - cmd_inventory
+    connections:
+      - location_id: loc_coderdojo
+        label: "CoderDojoへ戻る"
+        condition: null
+      - location_id: loc_danchi
+        label: "団地へ下りる"
+        condition: null
+    entry_scene: scene_slope_default
