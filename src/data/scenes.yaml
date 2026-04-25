@@ -91,7 +91,15 @@ scenes:
           - cmd_inventory
         talkable:
           - character_id: char_obachan
+            scene_id: scene_talk_danchi_gummy
+            condition:
+              flag: flag_yui_told_gummy
+              value: true
+          - character_id: char_obachan
             scene_id: scene_talk_danchi_give_candy
+            condition:
+              flag: flag_yui_told_gummy
+              value: false
         messages:
           - text: おばちゃんが立っていた。
             voice_character_id: null
@@ -111,6 +119,26 @@ scenes:
         item_give:
           - item_id: item_candy
             condition: null
+        next_scene: null
+      - id: scene_talk_danchi_gummy
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
+          - character_id: char_obachan
+            position: right
+            expression: normal
+        messages:
+          - text: 「おばちゃん、新発売のグミって知ってる？」
+            voice_character_id: char_hero
+          - text: 「グミ？なんだいそれ。」
+            voice_character_id: char_obachan
+          - text: 「なんか最近話題で……おばちゃんが持ってるの見たって聞いて。」
+            voice_character_id: char_hero
+          - text: 「んー……あたしゃよくわからないねえ。」
+            voice_character_id: char_obachan
+          - text: 「それよりケンちゃん、なんかのど渇いたねえ。」
+            voice_character_id: char_obachan
         next_scene: null
       - id: scene_examine_mailbox
         messages:
@@ -559,4 +587,7 @@ scenes:
             voice_character_id: char_yui
           - text: 「団地に戻って、おばちゃんに聞いてみたら？」
             voice_character_id: char_yui
+        flags_set:
+          - flag: flag_yui_told_gummy
+            value: true
         next_scene: null
