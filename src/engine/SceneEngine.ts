@@ -42,6 +42,9 @@ export function transitionTo(
   }
 
   if (scene.messages.length === 0) {
+    if (scene.game_end) {
+      return { ...next, phase: 'ending' };
+    }
     if (scene.cg_sequence?.length) {
       return { ...next, phase: 'cg_sequence' };
     }

@@ -14,7 +14,7 @@ import { MapView } from './MapView';
 import { InventoryPanel } from '../inventory/InventoryPanel';
 import { SystemMenu } from '../system/SystemMenu';
 import { CgSequencePlayer } from './CgSequencePlayer';
-import { EndingScreen } from './EndingScreen';
+import { EndingSequence } from './EndingSequence';
 import styles from './GameScreen.module.css';
 
 export function GameScreen() {
@@ -182,7 +182,7 @@ export function GameScreen() {
       )}
 
       {state.phase === 'ending' && (
-        <EndingScreen onTitle={goToTitle} />
+        <EndingSequence frames={scene?.cg_sequence ?? []} onTitle={goToTitle} />
       )}
     </div>
   );
