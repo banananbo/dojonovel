@@ -24,6 +24,7 @@ interface GameStore {
   advanceMessage: () => void;
   selectChoice: (index: number) => void;
   executeCommand: (commandId: string) => void;
+  selectTalkTarget: (index: number) => void;
   moveToLocation: (locationId: string) => void;
   clickArea: (areaId: string) => void;
   useItem: (itemId: string) => void;
@@ -42,6 +43,7 @@ function buildInitialState(masterData: MasterData): GameState {
     sceneHistory: [],
     phase: 'title',
     currentCharacters: [],
+    talkCandidates: [],
   };
 }
 
@@ -72,6 +74,7 @@ export const useGameStore = create<GameStore>((set, get) => {
           sceneHistory: saveData.sceneHistory,
           phase: 'command',
           currentCharacters: saveData.currentCharacters ?? [],
+          talkCandidates: [],
         },
         playtimeStart: Date.now() - saveData.playtime * 1000,
       });
@@ -112,8 +115,21 @@ export const useGameStore = create<GameStore>((set, get) => {
         const withHistory = pushHistory(state.currentSceneId, state);
         set({ state: transitionTo(result.transitionSceneId, withHistory, masterData) });
       } else {
-        set({ state: { ...state, phase: result.newPhase } });
+        set({ state: { ...state, phase: result.newPhase, talkCandidates: result.talkCandidates ?? [] } });
       }
+    },
+
+    selectTalkTarget: (index: number) => {
+      const { state, masterData } = get();
+      if (state.phase !== 'talk_select') return;
+      if (index < 0) {
+        set((s) => ({ state: { ...s.state, phase: 'command', talkCandidates: [] } }));
+        return;
+      }
+      const target = state.talkCandidates[index];
+      if (!target) return;
+      const withHistory = pushHistory(state.currentSceneId, state);
+      set({ state: { ...transitionTo(target.sceneId, withHistory, masterData), talkCandidates: [] } });
     },
 
     moveToLocation: (locationId: string) => {

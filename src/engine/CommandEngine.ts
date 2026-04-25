@@ -1,8 +1,9 @@
-import type { GameState, GamePhase } from '../types/gameState';
+import type { GameState, GamePhase, TalkCandidate } from '../types/gameState';
 import type { CommandDefinition } from '../types/command';
 import type { Scene } from '../types/scene';
 import type { LocationDefinition } from '../types/location';
 import type { MasterData } from '../loaders/dataLoader';
+import { evaluateCondition } from './ConditionEvaluator';
 
 export function getAvailableCommands(
   scene: Scene | undefined,
@@ -19,6 +20,7 @@ export function getAvailableCommands(
 export interface CommandResult {
   newPhase: GamePhase;
   transitionSceneId?: string;
+  talkCandidates?: TalkCandidate[];
 }
 
 export function executeCommand(
@@ -38,30 +40,21 @@ export function executeCommand(
       return { newPhase: 'inventory' };
     case 'talk': {
       const scene = masterData.scenes[state.currentSceneId];
-      const talkSceneId = findTalkScene(state.currentLocationId, masterData);
-      if (talkSceneId) {
-        return { newPhase: 'message', transitionSceneId: talkSceneId };
+      const talkable = scene?.talkable ?? [];
+      const ctx = { flags: state.flags, inventory: state.inventory, locationId: state.currentLocationId };
+      const candidates: TalkCandidate[] = talkable
+        .filter((t) => evaluateCondition(t.condition ?? null, ctx))
+        .map((t) => ({ characterId: t.character_id, sceneId: t.scene_id }));
+
+      if (candidates.length === 0) return { newPhase: 'command' };
+      if (candidates.length === 1) {
+        return { newPhase: 'message', transitionSceneId: candidates[0].sceneId };
       }
-      if (scene?.characters && scene.characters.length > 0) {
-        return { newPhase: 'message', transitionSceneId: `scene_talk_${scene.characters[0].character_id}` };
-      }
-      return { newPhase: 'command' };
+      return { newPhase: 'talk_select', talkCandidates: candidates };
     }
     case 'system':
       return { newPhase: 'system_menu' };
     default:
       return { newPhase: state.phase };
   }
-}
-
-function findTalkScene(locationId: string, masterData: MasterData): string | null {
-  const sceneId = `scene_talk_${locationId.replace('loc_', '')}`;
-  if (masterData.scenes[sceneId]) return sceneId;
-
-  const candidates = Object.keys(masterData.scenes).filter(
-    (id) =>
-      id.startsWith('scene_talk_') &&
-      masterData.scenes[id].location_id === locationId,
-  );
-  return candidates[0] ?? null;
 }

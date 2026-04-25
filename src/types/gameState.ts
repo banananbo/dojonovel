@@ -9,7 +9,13 @@ export type GamePhase =
   | 'map'
   | 'examine'
   | 'inventory'
-  | 'system_menu';
+  | 'system_menu'
+  | 'talk_select';
+
+export interface TalkCandidate {
+  characterId: string;
+  sceneId: string;
+}
 
 export interface GameState {
   currentSceneId: string;
@@ -20,6 +26,7 @@ export interface GameState {
   sceneHistory: string[];
   phase: GamePhase;
   currentCharacters: CharacterDisplay[];
+  talkCandidates: TalkCandidate[];
 }
 
 export const INITIAL_SCENE_ID = 'scene_danchi_morning';

@@ -22,6 +22,7 @@ export function GameScreen() {
     advanceMessage,
     selectChoice,
     executeCommand,
+    selectTalkTarget,
     moveToLocation,
     clickArea,
     useItem,
@@ -110,6 +111,27 @@ export function GameScreen() {
           inventory={state.inventory}
           locationId={state.currentLocationId}
           onSelect={selectChoice}
+        />
+      )}
+
+      {state.phase === 'talk_select' && (
+        <ChoiceList
+          choices={[
+            ...state.talkCandidates.map((c) => ({
+              label: masterData.characters[c.characterId]?.name ?? c.characterId,
+              next_scene: c.sceneId,
+              condition: null,
+            })),
+            { label: 'やめる', next_scene: '', condition: null },
+          ]}
+          flags={state.flags}
+          inventory={state.inventory}
+          locationId={state.currentLocationId}
+          onSelect={(i) =>
+            i === state.talkCandidates.length
+              ? selectTalkTarget(-1)
+              : selectTalkTarget(i)
+          }
         />
       )}
 

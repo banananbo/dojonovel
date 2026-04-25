@@ -56,6 +56,12 @@ export interface ItemGive {
   condition: Condition | null;
 }
 
+export interface TalkableEntry {
+  character_id: string;
+  scene_id: string;
+  condition?: Condition | null;
+}
+
 export interface Scene {
   id: string;
   location_id?: string;
@@ -65,6 +71,7 @@ export interface Scene {
   messages: SceneMessage[];
   commands?: string[];
   clickable_areas?: ClickableArea[];
+  talkable?: TalkableEntry[];
   branches?: SceneBranches;
   next_scene?: string | null;
   flags_set?: FlagSet[];

@@ -56,6 +56,9 @@ scenes:
         label: "??"
         next_scene: scene_examine_hatena
         condition: null
+    talkable:
+      - character_id: char_obachan
+        scene_id: scene_talk_danchi
     branches:
       type: none
     child_scenes:
@@ -97,6 +100,7 @@ scenes:
               まあいいか
             voice_character_id: char_hero
         location_id: loc_danchi
+        next_scene: null
   - id: scene_station_default
     location_id: loc_station
     background: backgrounds/akabane.jpg
@@ -111,13 +115,13 @@ scenes:
       - text: 休日の昼間、人が多く賑わっている。
         voice_character_id: null
     clickable_areas:
-      - id: area_station_board
-        x: 100
-        "y": 160
-        width: 110
-        height: 140
-        label: 掲示板
-        next_scene: scene_examine_station_board
+      - id: area_station_hiroba
+        x: 254
+        "y": 340
+        width: 100
+        height: 88
+        label: 広場
+        next_scene: scene_examine_station_hiroba
         condition: null
       - id: area_kiosk
         x: 560
@@ -127,18 +131,21 @@ scenes:
         label: キオスク
         next_scene: scene_examine_kiosk
         condition: null
+    talkable:
+      - character_id: char_yui
+        scene_id: scene_talk_station
     branches:
       type: none
     child_scenes:
-      - id: scene_examine_station_board
+      - id: scene_examine_station_hiroba
         messages:
-          - text: 駅前の掲示板を見た。
+          - text: 駅前の広場を見た。
             voice_character_id: null
-          - text: いくつかのお知らせの中に、見覚えのあるチラシがある。
+          - text: ゴミが落ちているなかに、見覚えのあるチラシがある。
             voice_character_id: null
-          - text: 「CoderDojo赤羽　本日開催！　参加無料　午後1時より」
+          - text: 「CoderDojo赤羽　本日開催！　参加無料　午後9時30分より」
             voice_character_id: null
-          - text: チラシを一枚もらった！
+          - text: チラシを一枚拾った！
             voice_character_id: null
         item_give:
           - item_id: item_flyer
@@ -183,7 +190,7 @@ scenes:
               - text: 「あっ、ケンじゃん！やっぱりいた。」
                 voice_character_id: char_yui
                 voice_style: normal
-              - text: 「今日CoderDojo行くでしょ？掲示板もう見た？」
+              - text: 「今日CoderDojo行くでしょ？チラシもう見た？」
                 voice_character_id: char_yui
                 voice_style: normal
             branches:
@@ -263,6 +270,9 @@ scenes:
     flags_set:
       - flag: flag_arrived_coderdojo
         value: true
+    talkable:
+      - character_id: char_mentor
+        scene_id: scene_talk_coderdojo
     branches:
       type: none
     child_scenes:
