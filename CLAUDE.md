@@ -179,6 +179,26 @@ public/assets/
 音声生成スクリプト: `npm run gen:voice`
 `scripts/generate-voices.mjs` が `child_scenes` を再帰的にたどって全メッセージの音声を生成する。
 
+## 開発フロー（Gitブランチ運用）
+
+タスクは必ずfeatureブランチで進め、動作確認後にmasterへマージする。
+
+```bash
+# 1. ブランチを切る
+git checkout -b feature/<task-name>
+
+# 2. 実装・コミット（複数可）
+
+# 3. 動作確認（npx tsc --noEmit + npm run build 最低限）
+
+# 4. masterへマージ
+git checkout master
+git merge --no-ff feature/<task-name>
+
+# 5. ブランチ削除
+git branch -d feature/<task-name>
+```
+
 ## ビルド・デプロイ
 
 ```bash
