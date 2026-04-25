@@ -1,0 +1,38 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.label {
+  width: 70px;
+  font-size: 13px;
+  color: #c8b890;
+  flex-shrink: 0;
+}
+
+.slider {
+  flex: 1;
+  accent-color: #c8a85a;
+  cursor: pointer;
+}
+
+.val {
+  width: 32px;
+  text-align: right;
+  font-size: 13px;
+  color: #a09070;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}

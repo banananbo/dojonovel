@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGameStore } from './store/gameStore';
+import { useAudioStore } from './store/audioStore';
 import { TitleScreen } from './components/system/TitleScreen';
 import { GameScreen } from './components/game/GameScreen';
 import './App.css';
@@ -20,7 +21,10 @@ function useGameScale() {
 
 function App() {
   const { state, startNewGame, loadGame } = useGameStore();
+  const { loadSettings } = useAudioStore();
   const scale = useGameScale();
+
+  useEffect(() => { loadSettings(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="app-wrapper">
