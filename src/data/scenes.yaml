@@ -170,6 +170,9 @@ scenes:
     talkable:
       - character_id: char_yui
         scene_id: scene_talk_station
+        condition:
+          flag: flag_met_college_student
+          value: false
     branches:
       type: none
     child_scenes:
@@ -435,6 +438,10 @@ scenes:
             flag: flag_visited_slope
             value: false
           next_scene: scene_slope_first_visit
+        - condition:
+            flag: flag_met_college_student
+            value: true
+          next_scene: scene_slope_with_yui
         - condition: null
           next_scene: scene_slope_with_student
     child_scenes:
@@ -524,3 +531,28 @@ scenes:
               - text: 「そっかあ……じゃあもうちょっと探してみる。」
                 voice_character_id: char_college_student
             next_scene: null
+      - id: scene_slope_with_yui
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
+          - character_id: char_yui
+            position: right
+            expression: normal
+        messages:
+          - text: 坂の途中に、ユイがいた。
+            voice_character_id: null
+          - text: 「あ、ケン！ここにいたんだ。」
+            voice_character_id: char_yui
+        talkable:
+          - character_id: char_yui
+            scene_id: scene_talk_slope_yui
+        branches:
+          type: none
+      - id: scene_talk_slope_yui
+        messages:
+          - text: 「さっきの大学生、グミ探してたんだって？」
+            voice_character_id: char_yui
+          - text: 「あのグミ、私も気になってた！どこで売ってるんだろうね。」
+            voice_character_id: char_yui
+        next_scene: null
