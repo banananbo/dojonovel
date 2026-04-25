@@ -9,7 +9,7 @@ ReactJS + YAML で作るアドベンチャー/ノベルゲーム。
 - **データ定義**: YAML (js-yaml、Vite `?raw` import)
 - **スタイリング**: CSS Modules
 - **音声**: VOICEVOX Engine (ローカル) + 事前生成wav
-- **デプロイ先**: GitHub Pages (`/novel/` base path)
+- **デプロイ先**: GitHub Pages (`/dojonovel/` base path)
 
 ## プロジェクト構造
 
@@ -21,6 +21,7 @@ ReactJS + YAML で作るアドベンチャー/ノベルゲーム。
 - `src/components/` — Reactコンポーネント
 - `src/audio/` — 音声処理
 - `src/hooks/` — カスタムフック
+- `src/editor/` — ゲーム管理エディタ（ローカル開発専用）
 - `public/assets/` — 画像・音声アセット（別途配置）
 
 ## 設計原則
@@ -49,6 +50,16 @@ Vite の `?raw` suffix でテキスト読み込み → `js-yaml` でパース。
 `src/components/game/GameScreen.tsx` がルートコンテナ。
 クリッカブルエリアの座標は `800×600` 基準で定義する。
 
+モバイル対応は `src/App.tsx` の `useGameScale()` フックが `transform: scale()` でスケーリング。
+座標系は常に800×600のままで、ブラウザがtransform行列を通じて自動マッピングする。
+
+### child_scenes（入れ子シーン）
+シーンは `child_scenes` 配列を持てる。`src/loaders/dataLoader.ts` の `flattenScenes()` がロード時にフラットな辞書に展開する。子シーンは `location_id` と `background` を親から継承する。
+
+### ChoiceListのインデックス
+`ChoiceList` は `originalIndex`（元の配列でのインデックス）を `onSelect` に渡す。
+`SceneEngine.selectChoice` は `scene.branches.choices[choiceIndex]` で元配列を直接参照する（フィルタ後の配列にインデックスしてはいけない）。
+
 ## YAMLスキーマ概要
 
 ### scenes.yaml
@@ -57,16 +68,22 @@ scenes:
   - id: string                    # ユニークID (scene_ プレフィックス)
     location_id: string           # 場所ID
     background: string            # 背景画像パス（省略可）
+    bgm: string                   # BGMファイルパス（省略可）
     characters: []                # 表示キャラ（省略可）
     messages: []                  # セリフ配列
     commands: []                  # 使えるコマンドID（省略時はlocation側のdefault）
     clickable_areas: []           # クリッカブルエリア（省略可）
+    talkable: []                  # 話せるキャラ一覧（cmd_talk で使用）
+      - character_id: string
+        scene_id: string          # 会話シーンID
+        condition: ...            # 省略可
     branches:                     # 分岐（省略可）
       type: choice | auto | none
       choices: []
     next_scene: string | null     # 直進先 (nullの場合はsceneHistoryからpopして戻る)
     flags_set: []                 # 開始時に設定するフラグ
     item_give: []                 # 付与するアイテム（条件付き可）
+    child_scenes: []              # 入れ子シーン（ロード時にフラット展開される）
 ```
 
 ### flags.yaml
@@ -90,6 +107,55 @@ condition:
   or: []                  # OR結合
 ```
 
+## GamePhase
+
+`src/types/gameState.ts` の `GamePhase` union type がどのUIを表示するかを制御する。
+
+| フェーズ | 表示するUI |
+|---------|-----------|
+| `title` | タイトル画面 |
+| `message` | DialogueBox（セリフ） |
+| `choice` | ChoiceList（選択肢） |
+| `command` | CommandPanel（コマンドメニュー） |
+| `examine` | ClickableAreaOverlay（調べる） |
+| `map` | MapView（移動） |
+| `inventory` | InventoryPanel（アイテム） |
+| `talk_select` | ChoiceList（話しかけるキャラ選択） |
+| `system_menu` | SystemMenu |
+
+## ゲーム管理エディタ
+
+`http://localhost:5173/editor.html` でアクセスできるローカル開発専用ツール。
+GitHub Pages にはデプロイしない。
+
+### 機能
+- **シーンエディタ**: シーンのメッセージ・キャラ・分岐・フラグをGUI編集
+- **エリアエディタ**: 背景画像上でドラッグしてクリッカブルエリアの座標を視覚的に編集
+
+### YAML読み書き
+File System Access API（Chrome/Edge のみ）で `src/data/` フォルダを直接読み書きする。
+「フォルダを開く」→ `src/data/` を選択 → Vite HMR でゲームに即反映。
+
+### エディタ構成
+```
+src/editor/
+  main.tsx              ← エントリポイント
+  EditorApp.tsx         ← タブ切り替えルート
+  pages/
+    SceneEditorPage.tsx
+    AreaEditorPage.tsx
+  components/
+    SceneList.tsx       ← ツリー表示
+    MessageEditor.tsx
+    AreaCanvas.tsx      ← ドラッグ矩形描画
+    AreaPanel.tsx
+  hooks/
+    useYamlFs.ts        ← File System Access API ラッパー
+```
+
+### Vite マルチページビルド
+`vite.config.ts` の `build.rollupOptions.input` に `editor: 'editor.html'` を追加済み。
+
 ## アセット配置
 
 ```
@@ -110,6 +176,9 @@ public/assets/
 
 ハッシュキー: `sha1(text + "_" + speakerId)` 形式 → `src/utils/hashUtils.ts` の `voiceHashKey()` で計算。
 
+音声生成スクリプト: `npm run gen:voice`
+`scripts/generate-voices.mjs` が `child_scenes` を再帰的にたどって全メッセージの音声を生成する。
+
 ## ビルド・デプロイ
 
 ```bash
@@ -117,13 +186,13 @@ public/assets/
 npm run dev
 
 # GitHub Pages用ビルド
-VITE_BASE_PATH=/novel/ VITE_VOICEVOX_PREBUILT_ONLY=true npm run build
+VITE_BASE_PATH=/dojonovel/ VITE_VOICEVOX_PREBUILT_ONLY=true npm run build
 
 # プレビュー (GitHub Pages想定)
 npm run preview:gh
 ```
 
-GitHub Actionsが `main` ブランチへのpushで自動デプロイ。
+GitHub Actionsが `master` ブランチへのpushで自動デプロイ。
 
 ## セーブデータ形式
 
@@ -136,6 +205,7 @@ interface SaveData {
   flags: Record<string, boolean | number | string>;
   inventory: string[];       // item_id の配列
   sceneHistory: string[];    // 戻る機能用スタック
+  currentCharacters: CharacterDisplay[]; // 表示中キャラ
   playtime: number;          // 秒
 }
 ```
@@ -148,9 +218,12 @@ interface SaveData {
 - アイテムIDは `item_` プレフィックス
 - キャラクターIDは `char_` プレフィックス
 - コマンドIDは `cmd_` プレフィックス
+- 会話シーンIDは `scene_talk_` プレフィックス（慣例）
 
 ## 新しいコマンドタイプの追加手順
 
 1. `src/data/commands.yaml` に新しいコマンドを追加（`action_type` を定義）
 2. `src/types/command.ts` の `CommandActionType` に型を追加
 3. `src/engine/CommandEngine.ts` の `executeCommand()` にswitch caseを追加
+4. 必要であれば `src/types/gameState.ts` に `GamePhase` を追加
+5. `src/components/game/GameScreen.tsx` に対応するUI描画を追加
