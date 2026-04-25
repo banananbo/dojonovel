@@ -72,6 +72,7 @@ export interface Scene {
   commands?: string[];
   clickable_areas?: ClickableArea[];
   talkable?: TalkableEntry[];
+  overlay_image?: string;
   branches?: SceneBranches;
   next_scene?: string | null;
   flags_set?: FlagSet[];

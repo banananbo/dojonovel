@@ -83,6 +83,13 @@ export function GameScreen() {
         );
       })}
 
+      {state.phase === 'message' && scene?.overlay_image && (
+        <div
+          className={styles.cgOverlay}
+          style={{ backgroundImage: `url(${import.meta.env.BASE_URL}assets/${scene.overlay_image})` }}
+        />
+      )}
+
       {state.phase === 'examine' && (
         <ClickableAreaOverlay
           areas={scene?.clickable_areas ?? []}

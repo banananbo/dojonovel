@@ -7,3 +7,18 @@
   font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'MS Mincho', serif;
   user-select: none;
 }
+
+.cgOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: cgFadeIn 0.3s ease;
+}
+
+@keyframes cgFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
