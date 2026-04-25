@@ -139,6 +139,39 @@ scenes:
             voice_character_id: char_obachan
           - text: 「それよりケンちゃん、なんかのど渇いたねえ。」
             voice_character_id: char_obachan
+        branches:
+          type: auto
+          choices:
+            - condition:
+                has_item: item_drink
+              next_scene: scene_give_drink_to_obachan
+            - condition: null
+      - id: scene_give_drink_to_obachan
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
+          - character_id: char_obachan
+            position: right
+            expression: normal
+        messages:
+          - text: ジュースを持っていた。おばちゃんに渡してみる。
+            voice_character_id: null
+          - text: 「あら、ありがとうねえ。」
+            voice_character_id: char_obachan
+          - text: おばちゃんはジュースをごくごく飲んだ。
+            voice_character_id: null
+          - text: 「……あっ、そういえば。」
+            voice_character_id: char_obachan
+          - text: 「ポケットに何か入ってたわ。これじゃないかい？」
+            voice_character_id: char_obachan
+          - text: おばちゃんのポケットから、グミが出てきた！
+            voice_character_id: null
+        item_remove:
+          - item_drink
+        item_give:
+          - item_id: item_gummy
+            condition: null
         next_scene: null
       - id: scene_examine_mailbox
         messages:

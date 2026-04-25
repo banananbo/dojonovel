@@ -2,7 +2,7 @@ import type { GameState, GamePhase } from '../types/gameState';
 import type { Scene } from '../types/scene';
 import type { MasterData } from '../loaders/dataLoader';
 import { applyFlagsSet } from './FlagEngine';
-import { tryGiveItems } from './ItemEngine';
+import { tryGiveItems, removeItem } from './ItemEngine';
 import { evaluateCondition } from './ConditionEvaluator';
 
 export function transitionTo(
@@ -37,6 +37,9 @@ export function transitionTo(
 
   next = { ...next, flags: applyFlagsSet(scene.flags_set, next.flags) };
   next = tryGiveItems(scene.item_give, next);
+  if (scene.item_remove) {
+    for (const itemId of scene.item_remove) next = removeItem(itemId, next);
+  }
 
   if (scene.messages.length === 0) {
     return resolveAfterMessages(next, scene, masterData);

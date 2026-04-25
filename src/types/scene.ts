@@ -77,4 +77,5 @@ export interface Scene {
   next_scene?: string | null;
   flags_set?: FlagSet[];
   item_give?: ItemGive[];
+  item_remove?: string[];
 }
