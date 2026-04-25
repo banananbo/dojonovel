@@ -44,6 +44,16 @@ flags:
     default: false
     description: "CoderDojoの子供たちを調べた"
 
+  - id: flag_visited_slope
+    type: boolean
+    default: false
+    description: "団地への坂を初回訪問済み"
+
+  - id: flag_met_college_student
+    type: boolean
+    default: false
+    description: "坂で大学生と話した"
+
   - id: flag_chapter
     type: integer
     default: 1

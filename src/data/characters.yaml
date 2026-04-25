@@ -13,7 +13,7 @@ characters:
   - id: char_yui
     name: "ユイ"
     name_flag: null
-    voicevox_speaker_id: 1
+    voicevox_speaker_id: 54
     y_offset: -250
     sprites:
       normal: characters/yui/girl_normal.png
@@ -39,3 +39,12 @@ characters:
     sprites:
       normal: characters/obachan/obachan_nomal.png
       talking: characters/obachan/obachan_talking.png
+
+  - id: char_college_student
+    name: "大学生"
+    name_flag: null
+    voicevox_speaker_id: 22
+    y_offset: -250
+    sprites:
+      normal: characters/college_student/normal.png
+      talking: characters/college_student/talking.png

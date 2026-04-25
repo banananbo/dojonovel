@@ -309,7 +309,7 @@ scenes:
         width: 35
         height: 62
         label: ドリンク
-        next_scene: scene_examine_coderdojo_pcs
+        next_scene: scene_examine_dojo_drink
         condition: null
     flags_set:
       - flag: flag_arrived_coderdojo
@@ -341,6 +341,30 @@ scenes:
             value: true
         next_scene: null
       - id: scene_talk_coderdojo
+        messages: []
+        branches:
+          type: auto
+          choices:
+            - label: ""
+              condition:
+                and:
+                  - flag: flag_met_mentor
+                    value: true
+                  - flag: flag_examined_whiteboard
+                    value: true
+                  - flag: flag_examined_kids
+                    value: true
+              next_scene: scene_talk_coderdojo_mentor_bored
+            - label: ""
+              condition: null
+              next_scene: scene_talk_coderdojo_mentor
+      - id: scene_talk_coderdojo_mentor_bored
+        messages:
+          - text: 「……今日は気分がのらないな」
+            voice_character_id: char_hero
+            voice_style: normal
+        next_scene: null
+      - id: scene_talk_coderdojo_mentor
         messages:
           - text: 「今日のテーマは自由制作だよ。何か作りたいものある？」
             voice_character_id: char_mentor
@@ -385,6 +409,10 @@ scenes:
         flags_set:
           - flag: ""
             value: true
+        item_give:
+          - item_id: item_drink
+            condition: null
+        next_scene: null
   - id: scene_use_candy
     overlay_image: cg/candy_happy.jpg
     messages:
@@ -399,31 +427,45 @@ scenes:
     location_id: loc_slope
     background: backgrounds/slope_day.jpg
     bgm: audio/bgm/piano.mp3
-    characters:
-      - character_id: char_hero
-        position: left
-        expression: normal
-    messages:
-      - text: 道場が終わったあと、ぼくはなんとなく坂道を歩いていた。
-        voice_character_id: null
-      - text: CoderDojoで教わったこと、ゲームを作るってどんな感じなんだろう。
-        voice_character_id: char_hero
-      - text: 坂の途中から、団地の建物が並ぶ景色が見えた。
-        voice_character_id: null
-      - text: ……なんか、飽きてきたな。
-        voice_character_id: char_hero
-    clickable_areas:
-      - id: area_slope_view
-        x: 300
-        "y": 200
-        width: 200
-        height: 150
-        label: 坂の眺め
-        next_scene: scene_examine_slope_view
-        condition: null
+    messages: []
     branches:
-      type: none
+      type: auto
+      choices:
+        - condition:
+            flag: flag_visited_slope
+            value: false
+          next_scene: scene_slope_first_visit
+        - condition: null
+          next_scene: scene_slope_with_student
     child_scenes:
+      - id: scene_slope_first_visit
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
+        messages:
+          - text: ぼくはなんとなく坂道を歩いていた。
+            voice_character_id: null
+          - text: CoderDojoで教わったこと、ゲームを作るってどんな感じなんだろう。
+            voice_character_id: char_hero
+          - text: 坂の途中から、団地の建物が並ぶ景色が見えた。
+            voice_character_id: null
+          - text: この坂きついな、、
+            voice_character_id: char_hero
+        flags_set:
+          - flag: flag_visited_slope
+            value: true
+        clickable_areas:
+          - id: area_slope_view
+            x: 300
+            "y": 200
+            width: 200
+            height: 150
+            label: 坂の眺め
+            next_scene: scene_examine_slope_view
+            condition: null
+        branches:
+          type: none
       - id: scene_examine_slope_view
         messages:
           - text: 赤羽の街が見渡せる。団地、線路、遠くにビル。
@@ -431,3 +473,54 @@ scenes:
           - text: ここから見ると、自分がいつも歩いてる場所がちっぽけに見える。
             voice_character_id: char_hero
         next_scene: null
+      - id: scene_slope_with_student
+        characters:
+          - character_id: char_hero
+            position: left
+            expression: normal
+          - character_id: char_college_student
+            position: right
+            expression: normal
+        messages:
+          - text: 坂の途中に、見慣れない大学生がいた。
+            voice_character_id: null
+          - text: スマホを見ながらうろうろしている。
+            voice_character_id: null
+        talkable:
+          - character_id: char_college_student
+            scene_id: scene_talk_slope_student
+        branches:
+          type: none
+      - id: scene_talk_slope_student
+        messages:
+          - text: 「ちょっといい？」
+            voice_character_id: char_college_student
+          - text: 「新発売のグミ探してるんだけど、この辺に売ってるとこ知らない？」
+            voice_character_id: char_college_student
+          - text: 「SNSで話題になってて……どうしても食べてみたくて。」
+            voice_character_id: char_college_student
+        flags_set:
+          - flag: flag_met_college_student
+            value: true
+        branches:
+          type: choice
+          choices:
+            - label: 「この辺、コンビニがあったような……」
+              condition: null
+              next_scene: scene_slope_student_hint
+            - label: 「知らないです……」
+              condition: null
+              next_scene: scene_slope_student_unknown
+        child_scenes:
+          - id: scene_slope_student_hint
+            messages:
+              - text: 「ほんと！？どこ！？」
+                voice_character_id: char_college_student
+              - text: 「ありがとう、行ってみる！」
+                voice_character_id: char_college_student
+            next_scene: null
+          - id: scene_slope_student_unknown
+            messages:
+              - text: 「そっかあ……じゃあもうちょっと探してみる。」
+                voice_character_id: char_college_student
+            next_scene: null
