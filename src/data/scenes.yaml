@@ -69,13 +69,57 @@ scenes:
             expression: normal
         commands:
           - cmd_examine
+          - cmd_talk
           - cmd_move
           - cmd_inventory
         messages:
           - text: 団地に戻ってきた。
             voice_character_id: null
         branches:
-          type: none
+          type: auto
+          choices:
+            - condition:
+                negate: true
+                has_item: item_candy
+              next_scene: scene_danchi_return_obachan
+            - condition: null
+        child_scenes:
+          - id: scene_danchi_return_obachan
+            characters:
+              - character_id: char_hero
+                position: left
+                expression: normal
+              - character_id: char_obachan
+                position: right
+                expression: normal
+            commands:
+              - cmd_examine
+              - cmd_talk
+              - cmd_move
+              - cmd_inventory
+            talkable:
+              - character_id: char_obachan
+                scene_id: scene_talk_danchi_give_candy
+            messages:
+              - text: おばちゃんが立っていた。
+                voice_character_id: null
+          - id: scene_talk_danchi_give_candy
+            characters:
+              - character_id: char_hero
+                position: left
+                expression: normal
+              - character_id: char_obachan
+                position: right
+                expression: normal
+            messages:
+              - text: 「ケンちゃん、アメ食べちゃった？ほら、もう一個あるよ。」
+                voice_character_id: char_obachan
+              - text: アメをもらった！
+                voice_character_id: null
+            item_give:
+              - item_id: item_candy
+                condition: null
+            next_scene: null
       - id: scene_examine_mailbox
         messages:
           - text: ケンの家の郵便受けだ。今日は特に何も入っていない。

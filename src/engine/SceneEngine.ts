@@ -90,7 +90,10 @@ function resolveAfterMessages(
         if (choice.next_scene) {
           return transitionTo(choice.next_scene, state, masterData);
         }
-        return goBack(state, masterData);
+        if (choice.next_scene === null) {
+          return goBack(state, masterData);
+        }
+        return toCommandPhase(state, scene, masterData);
       }
     }
     return goBack(state, masterData);
