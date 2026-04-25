@@ -23,7 +23,7 @@ export interface GameSettings {
 }
 
 export const DEFAULT_SETTINGS: GameSettings = {
-  bgmVolume: 0.8,
+  bgmVolume: 0.4,
   seVolume: 0.8,
   voiceVolume: 0.8,
   textSpeed: 40,
