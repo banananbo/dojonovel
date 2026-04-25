@@ -54,6 +54,11 @@ flags:
     default: false
     description: "坂で大学生と話した"
 
+  - id: flag_yui_told_gummy
+    type: boolean
+    default: false
+    description: "ユイからグミはおばちゃんが持っていると聞いた"
+
   - id: flag_chapter
     type: integer
     default: 1
