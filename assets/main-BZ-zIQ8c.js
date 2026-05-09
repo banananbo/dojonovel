@@ -2596,9 +2596,9 @@ import{a as e,i as t,l as n,n as r,o as i}from"./js-yaml-DTURmwR3.js";var a=n(i(
     cg_sequence:
       - src: cg/candy_happy.jpg
         position: center
-      - src: cg/gummy_joy.jpg
+      - src: cg/play_card.jpg
         position: center
-      - src: cg/happy_dojo.jpg
+      - src: cg/run_park.jpg
         position: center
       - src: cg/mirai.jpg
         position: center
